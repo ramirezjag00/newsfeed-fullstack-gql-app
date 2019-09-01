@@ -1,5 +1,5 @@
-# GraphQL Basics
-> This project shows basic typeDefinitions, resolvers and context in GraphQL for Creating, Updating, Reading and Deleting relational models.
+# GraphQL Server
+> This project shows basic typeDefinitions, resolvers and context in Apollo-Server for Creating, Updating, Reading and Deleting relational models.
 
 ## Models:
 - Users
