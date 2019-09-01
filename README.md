@@ -1,2 +1,2 @@
-# Collection of Node-GraphQL mini projects
-- GraphQL Server and React-Native App
+# Collection of GraphQL - server and client projects
+- GraphQL Server and React-Native App `NewsFeed`
