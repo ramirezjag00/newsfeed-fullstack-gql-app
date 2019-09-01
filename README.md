@@ -1,2 +1,2 @@
 # Collection of Node-GraphQL mini projects
-- GraphQL Basics
+- GraphQL Server and React-Native App
