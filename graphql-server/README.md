@@ -1,5 +1,5 @@
 # GraphQL Basics
-> This project shows basic typeDefinitions, resolvers and context in GraphQL for Creating, Updating, Reading and Deleting associated models.
+> This project shows basic typeDefinitions, resolvers and context in GraphQL for Creating, Updating, Reading and Deleting relational models.
 
 ## Models:
 - Users
