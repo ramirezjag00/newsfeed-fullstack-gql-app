@@ -1,3 +1,5 @@
+import uuidv4 from 'uuid/v4';
+
 const resolvers = {
   Query: {
     users(parent, { queryName, id }, { users }, info) {
@@ -86,10 +88,13 @@ const resolvers = {
     }
   },
   Mutation: {
-    addPost(parent, args, { posts }, info) {
-      const postsCount = posts.length;
+    addPost(parent, args, { posts, users }, info) {
+      const userExists = users.some(user => user.id === args.authorId);
+
+      if (!userExists) throw new Error(`userId ${args.authorId} does not exist`);
+
       const post = {
-        id: `${postsCount + 1}`,
+        id: uuidv4(),
         title: args.title,
         body: args.body,
         published: args.published,
@@ -99,9 +104,17 @@ const resolvers = {
       return post;
     },
     updatePost(parent, args, { posts }, info) {
-      const post = posts.find(post => {
-        return post.id === args.postId;
-      });
+      const isExisting = posts.some(post => post.id === args.postId);
+      let post;
+    
+      if (isExisting) {
+        post = posts.find(post => {
+          return post.id === args.postId;
+        });
+      } else {
+        throw new Error(`postId ${args.postId} does not exist`);
+      }
+
       const postIndex = posts.indexOf(post);
       const updatedPost = {
         id: args.postId,
@@ -114,17 +127,30 @@ const resolvers = {
       return updatedPost;
     },
     deletePost(parent, args, { posts }, info) {
-      const post = posts.find(post => {
-        return post.id === args.id;
-      });
+      const isExisting = posts.some(post => post.id === args.id);
+      let post;
+
+      if (isExisting) {
+        post = posts.find(post => {
+          return post.id === args.id;
+        });
+      } else {
+        throw new Error(`id ${args.id} does not exist`);
+      }
+      
       const postIndex = posts.indexOf(post);
       posts.splice(postIndex, 1);
       return posts;
     },
-    addComment(parent, args, { comments }, info) {
-      const commentsCount = comments.length;
+    addComment(parent, args, { comments, users, posts }, info) {
+      const userExists = users.some(user => user.id === args.authorId);
+      const postExists = posts.some(post => post.id === args.postId);
+
+      if (!userExists) throw new Error(`userId ${args.authorId} does not exist`);
+      if (!postExists) throw new Error(`postId ${args.postId} does not exist`);
+
       const comment = {
-        id: `${commentsCount + 1}`,
+        id: uuidv4(),
         text: args.text,
         author: args.authorId,
         post: args.postId,
@@ -133,9 +159,17 @@ const resolvers = {
       return comment;
     },
     updateComment(parent, args, { comments }, info) {
-      const comment = comments.find(comment => {
-        return comment.id === args.commentId;
-      });
+      const isExisting = comments.some(comment => comment.id === args.commentId);
+      let comment;
+
+      if (isExisting) {
+        comment = comments.find(comment => {
+          return comment.id === args.commentId;
+        });
+      } else {
+        throw new Error(`commentId ${args.commentId} does not exist`);
+      }
+
       const commentIndex = comments.indexOf(comment);
       const updatedComment = {
         id: args.commentId,
@@ -147,17 +181,28 @@ const resolvers = {
       return updatedComment;
     },
     deleteComment(parent, args, { comments }, info) {
-      const comment = comments.find(comment => {
-        return comment.id === args.id;
-      });
+      const isExisting = comments.some(comment => comment.id === args.id);
+      let comment;
+      
+      if (isExisting) {
+        comment = comments.find(comment => {
+          return comment.id === args.id;
+        });
+      } else {
+        throw new Error(`id ${args.id} does not exist`);
+      }
+
       const commentIndex = comments.indexOf(comment);
       comments.splice(commentIndex, 1);
       return comments;
     },
     addUser(parent, args, { users }, info) {
-      const usersCount = users.length;
+      const emailTaken = users.some(user => user.email === args.email);
+
+      if (emailTaken) throw new Error('Email already taken');
+      
       const user = {
-        id: `${usersCount + 1}`,
+        id: uuidv4(),
         name: args.name,
         email: args.email,
         age: args.age,
@@ -166,9 +211,17 @@ const resolvers = {
       return user;
     },
     updateUser(parent, args, { users }, info) {
-      const user = users.find(user => {
-        return user.id === args.userId;
-      });
+      const isExisting = users.some(user => user.id === args.userId);
+      let user;
+
+      if (isExisting) {
+        user = users.find(user => {
+          return user.id === args.userId;
+        });
+      } else {
+        throw new Error(`userId ${args.userId} does not exist`);
+      }
+
       const userIndex = users.indexOf(user);
       const updatedUser = {
         id: args.userId,
@@ -180,9 +233,17 @@ const resolvers = {
       return updatedUser;
     },
     deleteUser(parent, args, { users }, info) {
-      const user = users.find(user => {
-        return user.id === args.id;
-      });
+      const isExisting = users.some(user => user.id === args.id);
+      let user;
+      
+      if (isExisting) {
+        user = users.find(user => {
+          return user.id === args.id;
+        });
+      } else {
+        throw new Error(`id ${args.id} does not exist`)
+      }
+
       const userIndex = users.indexOf(user);
       users.splice(userIndex, 1);
       return users;
