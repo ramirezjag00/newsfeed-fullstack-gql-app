@@ -89,40 +89,31 @@ const resolvers = {
   },
   Mutation: {
     addPost(parent, args, { posts, users }, info) {
-      const userExists = users.some(user => user.id === args.authorId);
+      const userExists = users.some(user => user.id === args.author);
 
-      if (!userExists) throw new Error(`userId ${args.authorId} does not exist`);
+      if (!userExists) throw new Error(`userId ${args.author} does not exist`);
 
       const post = {
         id: uuidv4(),
-        title: args.title,
-        body: args.body,
-        published: args.published,
-        author: args.authorId
+        ...args
       };
       posts.push(post);
       return post;
     },
     updatePost(parent, args, { posts }, info) {
-      const isExisting = posts.some(post => post.id === args.postId);
+      const isExisting = posts.some(post => post.id === args.id);
       let post;
     
       if (isExisting) {
         post = posts.find(post => {
-          return post.id === args.postId;
+          return post.id === args.id;
         });
       } else {
-        throw new Error(`postId ${args.postId} does not exist`);
+        throw new Error(`postId ${args.id} does not exist`);
       }
 
       const postIndex = posts.indexOf(post);
-      const updatedPost = {
-        id: args.postId,
-        title: args.title,
-        body: args.body,
-        published: args.published,
-        author: args.authorId
-      };
+      const updatedPost = { ...args };
       posts.splice(postIndex, 1, updatedPost)
       return updatedPost;
     },
@@ -143,40 +134,33 @@ const resolvers = {
       return posts;
     },
     addComment(parent, args, { comments, users, posts }, info) {
-      const userExists = users.some(user => user.id === args.authorId);
-      const isValidPost = posts.some(post => post.id === args.postId && post.published);
+      const userExists = users.some(user => user.id === args.author);
+      const isValidPost = posts.some(post => post.id === args.post && post.published);
 
-      if (!userExists) throw new Error(`userId ${args.authorId} does not exist`);
-      if (!isValidPost) throw new Error(`postId ${args.postId} does not exist or it isn\'t published yet`);
+      if (!userExists) throw new Error(`userId ${args.author} does not exist`);
+      if (!isValidPost) throw new Error(`postId ${args.post} does not exist or it isn\'t published yet`);
 
       const comment = {
         id: uuidv4(),
-        text: args.text,
-        author: args.authorId,
-        post: args.postId,
+        ...args
       };
       comments.push(comment);
       return comment;
     },
     updateComment(parent, args, { comments }, info) {
-      const isExisting = comments.some(comment => comment.id === args.commentId);
+      const isExisting = comments.some(comment => comment.id === args.id);
       let comment;
 
       if (isExisting) {
         comment = comments.find(comment => {
-          return comment.id === args.commentId;
+          return comment.id === args.id;
         });
       } else {
-        throw new Error(`commentId ${args.commentId} does not exist`);
+        throw new Error(`commentId ${args.id} does not exist`);
       }
 
       const commentIndex = comments.indexOf(comment);
-      const updatedComment = {
-        id: args.commentId,
-        text: args.text,
-        author: args.authorId,
-        post: args.postId
-      };
+      const updatedComment = { ...args };
       comments.splice(commentIndex, 1, updatedComment)
       return updatedComment;
     },
@@ -203,32 +187,25 @@ const resolvers = {
       
       const user = {
         id: uuidv4(),
-        name: args.name,
-        email: args.email,
-        age: args.age,
+        ...args
       };
       users.push(user);
       return user;
     },
     updateUser(parent, args, { users }, info) {
-      const isExisting = users.some(user => user.id === args.userId);
+      const isExisting = users.some(user => user.id === args.id);
       let user;
 
       if (isExisting) {
         user = users.find(user => {
-          return user.id === args.userId;
+          return user.id === args.id;
         });
       } else {
-        throw new Error(`userId ${args.userId} does not exist`);
+        throw new Error(`userId ${args.id} does not exist`);
       }
 
       const userIndex = users.indexOf(user);
-      const updatedUser = {
-        id: args.userId,
-        name: args.name,
-        email: args.email,
-        age: args.age
-      };
+      const updatedUser = { ...args };
       users.splice(userIndex, 1, updatedUser)
       return updatedUser;
     },
