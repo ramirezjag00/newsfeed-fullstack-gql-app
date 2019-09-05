@@ -144,10 +144,10 @@ const resolvers = {
     },
     addComment(parent, args, { comments, users, posts }, info) {
       const userExists = users.some(user => user.id === args.authorId);
-      const postExists = posts.some(post => post.id === args.postId);
+      const isValidPost = posts.some(post => post.id === args.postId && post.published);
 
       if (!userExists) throw new Error(`userId ${args.authorId} does not exist`);
-      if (!postExists) throw new Error(`postId ${args.postId} does not exist`);
+      if (!isValidPost) throw new Error(`postId ${args.postId} does not exist or it isn\'t published yet`);
 
       const comment = {
         id: uuidv4(),
