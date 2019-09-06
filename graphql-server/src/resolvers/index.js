@@ -181,13 +181,13 @@ const resolvers = {
       return comments;
     },
     addUser(parent, args, { users }, info) {
-      const emailTaken = users.some(user => user.email === args.email);
+      const emailTaken = users.some(user => user.email === args.data.email);
 
       if (emailTaken) throw new Error('Email already taken');
       
       const user = {
         id: uuidv4(),
-        ...args
+        ...args.data
       };
       users.push(user);
       return user;

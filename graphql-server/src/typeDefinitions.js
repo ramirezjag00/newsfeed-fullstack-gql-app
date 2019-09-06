@@ -15,7 +15,7 @@ const typeDefs =
     updateComment(id: String!, text: String!, author: String!, post: String!): Comment!
     deleteComment(id: String!): [Comment!]!
 
-    addUser(name: String!, email: String!, age: Int): User!
+    addUser(data: AddUserInput): User!
     updateUser(id: String!, name: String!, email: String!, age: Int): User!
     deleteUser(id: String!): [User!]!
   }
@@ -31,6 +31,12 @@ const typeDefs =
     text: String!,
     author: String!,
     post: String!
+  }
+
+  input AddUserInput {
+    name: String!,
+    email: String!,
+    age: Int
   }
 
   type User {
