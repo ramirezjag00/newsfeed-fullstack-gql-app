@@ -89,13 +89,13 @@ const resolvers = {
   },
   Mutation: {
     addPost(parent, args, { posts, users }, info) {
-      const userExists = users.some(user => user.id === args.author);
+      const userExists = users.some(user => user.id === args.data.author);
 
-      if (!userExists) throw new Error(`userId ${args.author} does not exist`);
+      if (!userExists) throw new Error(`userId ${args.data.author} does not exist`);
 
       const post = {
         id: uuidv4(),
-        ...args
+        ...args.data
       };
       posts.push(post);
       return post;

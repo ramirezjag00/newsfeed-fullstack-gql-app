@@ -7,7 +7,7 @@ const typeDefs =
   }
 
   type Mutation {
-    addPost(title: String!, body: String!, published: Boolean!, author: String!): Post!
+    addPost(data: addPostInput): Post!
     updatePost(id: String!, title: String!, body: String!, published: Boolean!, author: String!): Post!
     deletePost(id: String!): [Post!]!
 
@@ -18,6 +18,13 @@ const typeDefs =
     addUser(name: String!, email: String!, age: Int): User!
     updateUser(id: String!, name: String!, email: String!, age: Int): User!
     deleteUser(id: String!): [User!]!
+  }
+
+  input addPostInput {
+    title: String!,
+    body: String!,
+    published: Boolean!,
+    author: String!
   }
 
   type User {
