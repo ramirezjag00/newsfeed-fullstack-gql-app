@@ -114,7 +114,7 @@ const resolvers = {
 
       const postIndex = posts.indexOf(post);
       const updatedPost = { ...args };
-      posts.splice(postIndex, 1, updatedPost)
+      posts.splice(postIndex, 1, updatedPost);
       return updatedPost;
     },
     deletePost(parent, args, { posts }, info) {
@@ -206,7 +206,7 @@ const resolvers = {
 
       const userIndex = users.indexOf(user);
       const updatedUser = { ...args };
-      users.splice(userIndex, 1, updatedUser)
+      users.splice(userIndex, 1, updatedUser);
       return updatedUser;
     },
     deleteUser(parent, args, { users }, info) {
@@ -218,7 +218,7 @@ const resolvers = {
           return user.id === args.id;
         });
       } else {
-        throw new Error(`id ${args.id} does not exist`)
+        throw new Error(`id ${args.id} does not exist`);
       }
 
       const userIndex = users.indexOf(user);
