@@ -6,6 +6,26 @@ const typeDefs =
     comments(queryText: String, id: String): [Comment!]!
   }
 
+
+  input AddPostInput {
+    title: String!,
+    body: String!,
+    published: Boolean!,
+    author: String!
+  }
+
+  input AddCommentInput {
+    text: String!,
+    author: String!,
+    post: String!
+  }
+
+  input AddUserInput {
+    name: String!,
+    email: String!,
+    age: Int
+  }
+
   type Mutation {
     addPost(data: AddPostInput): Post!
     updatePost(id: String!, title: String!, body: String!, published: Boolean!, author: String!): Post!
@@ -18,25 +38,6 @@ const typeDefs =
     addUser(data: AddUserInput): User!
     updateUser(id: String!, name: String!, email: String!, age: Int): User!
     deleteUser(id: String!): [User!]!
-  }
-
-  input AddPostInput {
-    title: String!,
-    body: String!,
-    published: Boolean!,
-    author: String!
-  }
-
-  input AddCommnetInput {
-    text: String!,
-    author: String!,
-    post: String!
-  }
-
-  input AddUserInput {
-    name: String!,
-    email: String!,
-    age: Int
   }
 
   type User {
