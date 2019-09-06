@@ -134,15 +134,15 @@ const resolvers = {
       return posts;
     },
     addComment(parent, args, { comments, users, posts }, info) {
-      const userExists = users.some(user => user.id === args.author);
-      const isValidPost = posts.some(post => post.id === args.post && post.published);
+      const userExists = users.some(user => user.id === args.data.author);
+      const isValidPost = posts.some(post => post.id === args.data.post && post.published);
 
-      if (!userExists) throw new Error(`userId ${args.author} does not exist`);
-      if (!isValidPost) throw new Error(`postId ${args.post} does not exist or it isn\'t published yet`);
+      if (!userExists) throw new Error(`userId ${args.data.author} does not exist`);
+      if (!isValidPost) throw new Error(`postId ${args.data.post} does not exist or it isn\'t published yet`);
 
       const comment = {
         id: uuidv4(),
-        ...args
+        ...args.data
       };
       comments.push(comment);
       return comment;

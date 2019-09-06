@@ -7,11 +7,11 @@ const typeDefs =
   }
 
   type Mutation {
-    addPost(data: addPostInput): Post!
+    addPost(data: AddPostInput): Post!
     updatePost(id: String!, title: String!, body: String!, published: Boolean!, author: String!): Post!
     deletePost(id: String!): [Post!]!
 
-    addComment(text: String!, author: String!, post: String!): Comment!
+    addComment(data: AddCommentInput): Comment!
     updateComment(id: String!, text: String!, author: String!, post: String!): Comment!
     deleteComment(id: String!): [Comment!]!
 
@@ -20,11 +20,17 @@ const typeDefs =
     deleteUser(id: String!): [User!]!
   }
 
-  input addPostInput {
+  input AddPostInput {
     title: String!,
     body: String!,
     published: Boolean!,
     author: String!
+  }
+
+  input AddCommnetInput {
+    text: String!,
+    author: String!,
+    post: String!
   }
 
   type User {
