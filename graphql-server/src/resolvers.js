@@ -117,21 +117,14 @@ const resolvers = {
       posts.splice(postIndex, 1, updatedPost);
       return updatedPost;
     },
-    deletePost(parent, args, { posts }, info) {
-      const isExisting = posts.some(post => post.id === args.id);
-      let post;
+    deletePost(parent, args, { posts, comments }, info) {
+      const postIndex = posts.findIndex(post => post.id === args.id);
 
-      if (isExisting) {
-        post = posts.find(post => {
-          return post.id === args.id;
-        });
-      } else {
-        throw new Error(`id ${args.id} does not exist`);
-      }
-      
-      const postIndex = posts.indexOf(post);
-      posts.splice(postIndex, 1);
-      return posts;
+      if (postIndex === -1) throw new Error('Post not found')
+
+      const [deletedPost] = posts.splice(postIndex);
+      comments = comments.filter(comment => comment.post !== args.id);
+      return deletedPost;
     },
     addComment(parent, args, { comments, users, posts }, info) {
       const userExists = users.some(user => user.id === args.data.author);
@@ -165,20 +158,12 @@ const resolvers = {
       return updatedComment;
     },
     deleteComment(parent, args, { comments }, info) {
-      const isExisting = comments.some(comment => comment.id === args.id);
-      let comment;
-      
-      if (isExisting) {
-        comment = comments.find(comment => {
-          return comment.id === args.id;
-        });
-      } else {
-        throw new Error(`id ${args.id} does not exist`);
-      }
+      const commentIndex = comments.findIndex(comment => comment.id === args.id);
 
-      const commentIndex = comments.indexOf(comment);
-      comments.splice(commentIndex, 1);
-      return comments;
+      if (commentIndex === -1) throw new Error('Comment not found');
+
+      const [deletedComment] = comments.splice(commentIndex, 1);
+      return deletedComment;
     },
     addUser(parent, args, { users }, info) {
       const emailTaken = users.some(user => user.email === args.data.email);
@@ -209,21 +194,28 @@ const resolvers = {
       users.splice(userIndex, 1, updatedUser);
       return updatedUser;
     },
-    deleteUser(parent, args, { users }, info) {
-      const isExisting = users.some(user => user.id === args.id);
-      let user;
-      
-      if (isExisting) {
-        user = users.find(user => {
-          return user.id === args.id;
-        });
-      } else {
-        throw new Error(`id ${args.id} does not exist`);
+    deleteUser(parent, args, { users, posts, comments }, info) {
+      const userIndex = users.findIndex(user => user.id === args.id);
+
+      if (userIndex === -1) {
+        throw new Error('User not found');
       }
 
-      const userIndex = users.indexOf(user);
-      users.splice(userIndex, 1);
-      return users;
+      const [deletedUser] = users.splice(userIndex, 1);
+
+      posts = posts.filter(post => {
+        const match = post.author === args.id;
+
+        if (match) {
+          comments = comments.filter(comment => comment.post !== post.id);
+        }
+
+        return !match;
+      });
+
+      comments = comments.filter(comment => comment.author !== args.id);
+
+      return deletedUser;
     },
   }
 };
