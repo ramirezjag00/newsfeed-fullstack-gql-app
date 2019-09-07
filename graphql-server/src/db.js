@@ -42,7 +42,7 @@ const posts = [
   },
 ];
 
-const comments = [
+let comments = [
   {
     id: '1',
     text: 'asdn ans n 1n1 ndl na nakjns n na',
@@ -69,4 +69,10 @@ const comments = [
   }
 ];
 
-export { users, posts, comments };
+const db = {
+  comments,
+  posts,
+  users
+};
+
+export default db;
