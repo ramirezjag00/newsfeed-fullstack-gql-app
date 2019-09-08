@@ -13,22 +13,18 @@ const Mutation = {
     posts.push(post);
     return post;
   },
-  updatePost(parent, args, { posts }, info) {
-    const isExisting = posts.some(post => post.id === args.id);
-    let post;
-  
-    if (isExisting) {
-      post = posts.find(post => {
-        return post.id === args.id;
-      });
-    } else {
-      throw new Error(`postId ${args.id} does not exist`);
+  updatePost(parent, { id, data }, { posts }, info) {
+    const { title, body, published } = data;
+    const post = posts.find(post => post.id === id);
+    if (!post) throw new Error('Post not found');
+
+    if (title && body) {
+      post.title = title;
+      post.body = body;
+      post.published = published;
     }
 
-    const postIndex = posts.indexOf(post);
-    const updatedPost = { ...args };
-    posts.splice(postIndex, 1, updatedPost);
-    return updatedPost;
+    return post;
   },
   deletePost(parent, args, { posts, comments }, info) {
     const postIndex = posts.findIndex(post => post.id === args.id);
