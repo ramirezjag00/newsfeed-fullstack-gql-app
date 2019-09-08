@@ -90,22 +90,21 @@ const Mutation = {
     users.push(user);
     return user;
   },
-  updateUser(parent, args, { users }, info) {
-    const isExisting = users.some(user => user.id === args.id);
-    let user;
-
-    if (isExisting) {
-      user = users.find(user => {
-        return user.id === args.id;
-      });
-    } else {
-      throw new Error(`userId ${args.id} does not exist`);
+  updateUser(parent, { id, data }, { users }, info) {
+    const { name, email, age } = data;
+    const user = users.find(user => user.id === id);
+    if (!user) throw new Error('User not found');
+    
+    if (email) {
+      const emailTaken = users.some(user => user.email === email);
+      if (emailTaken) throw new Error('Email is already taken');
+      user.email = email;
     }
 
-    const userIndex = users.indexOf(user);
-    const updatedUser = { ...args };
-    users.splice(userIndex, 1, updatedUser);
-    return updatedUser;
+    if (name) user.name = name;
+    if (age !== undefined) user.age = age;
+
+    return user;
   },
   deleteUser(parent, args, { users, posts, comments }, info) {
     const userIndex = users.findIndex(user => user.id === args.id);
