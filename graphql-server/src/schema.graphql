@@ -6,7 +6,7 @@ type Query {
 
 type Mutation {
   addPost(data: AddPostInput): Post!
-  updatePost(id: String!, title: String!, body: String!, published: Boolean!, author: String!): Post!
+  updatePost(id: String!, data: UpdatePostInput): Post!
   deletePost(id: String!): [Post!]!
 
   addComment(data: AddCommentInput): Comment!
@@ -46,6 +46,12 @@ input UpdateUserInput {
   name: String,
   email: String,
   age: Int
+}
+
+input UpdatePostInput {
+  title: String!,
+  body: String!,
+  published: Boolean!,
 }
 
 type User {
