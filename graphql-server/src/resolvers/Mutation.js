@@ -53,22 +53,17 @@ const Mutation = {
     comments.push(comment);
     return comment;
   },
-  updateComment(parent, args, { comments }, info) {
-    const isExisting = comments.some(comment => comment.id === args.id);
-    let comment;
+  updateComment(parent, { id, data }, { comments, posts }, info) {
+    const { text, post: postId } = data;
+    const comment = comments.find(comment => comment.id === id);
+    const isExistingPost = posts.some(post => (post.id === postId) && post.published);
 
-    if (isExisting) {
-      comment = comments.find(comment => {
-        return comment.id === args.id;
-      });
-    } else {
-      throw new Error(`commentId ${args.id} does not exist`);
-    }
+    if (!comment) throw new Error('Comment not found');
+    if (!isExistingPost) throw new Error('Post not found');
 
-    const commentIndex = comments.indexOf(comment);
-    const updatedComment = { ...args };
-    comments.splice(commentIndex, 1, updatedComment)
-    return updatedComment;
+    if (text) comment.text = text;
+
+    return comment;
   },
   deleteComment(parent, args, { comments }, info) {
     const commentIndex = comments.findIndex(comment => comment.id === args.id);
