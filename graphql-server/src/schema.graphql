@@ -5,16 +5,16 @@ type Query {
 }
 
 type Mutation {
-  addPost(data: AddPostInput): Post!
-  updatePost(id: String!, data: UpdatePostInput): Post!
+  addPost(data: AddPostInput!): Post!
+  updatePost(id: String!, data: UpdatePostInput!): Post!
   deletePost(id: String!): [Post!]!
 
-  addComment(data: AddCommentInput): Comment!
-  updateComment(id: String!, data: UpdateCommentInput): Comment!
+  addComment(data: AddCommentInput!): Comment!
+  updateComment(id: String!, data: UpdateCommentInput!): Comment!
   deleteComment(id: String!): [Comment!]!
 
-  addUser(data: AddUserInput): User!
-  updateUser(id: String!, data: UpdateUserInput): User!
+  addUser(data: AddUserInput!): User!
+  updateUser(id: String!, data: UpdateUserInput!): User!
   deleteUser(id: String!): [User!]!
 }
 
@@ -38,8 +38,7 @@ input AddUserInput {
 }
 
 input UpdateCommentInput {
-  text: String!,
-  post: String!
+  text: String,
 }
 
 input UpdateUserInput {
@@ -49,9 +48,9 @@ input UpdateUserInput {
 }
 
 input UpdatePostInput {
-  title: String!,
-  body: String!,
-  published: Boolean!,
+  title: String,
+  body: String,
+  published: Boolean,
 }
 
 type User {

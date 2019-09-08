@@ -18,11 +18,9 @@ const Mutation = {
     const post = posts.find(post => post.id === id);
     if (!post) throw new Error('Post not found');
 
-    if (title && body) {
-      post.title = title;
-      post.body = body;
-      post.published = published;
-    }
+    if (title) post.title = title;
+    if (body) post.body = body;
+    if (typeof published === 'boolean') post.published = published;
 
     return post;
   },
@@ -49,14 +47,11 @@ const Mutation = {
     comments.push(comment);
     return comment;
   },
-  updateComment(parent, { id, data }, { comments, posts }, info) {
-    const { text, post: postId } = data;
+  updateComment(parent, { id, data }, { comments }, info) {
+    const { text } = data;
     const comment = comments.find(comment => comment.id === id);
-    const isExistingPost = posts.some(post => (post.id === postId) && post.published);
 
     if (!comment) throw new Error('Comment not found');
-    if (!isExistingPost) throw new Error('Post not found');
-
     if (text) comment.text = text;
 
     return comment;
