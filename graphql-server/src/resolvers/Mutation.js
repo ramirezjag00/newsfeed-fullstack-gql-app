@@ -11,12 +11,14 @@ const Mutation = {
       ...args.data
     };
     posts.push(post);
-    if (args.data.published) pubsub.publish('post', {
-      post: {
-        mutation: 'CREATED',
-        data: post
-      }
-    });
+    if (args.data.published) {
+      pubsub.publish('post', {
+        post: {
+          mutation: 'CREATED',
+          data: post
+        }
+      });
+    }
     return post;
   },
   updatePost(parent, { id, data }, { posts }, info) {
@@ -30,13 +32,21 @@ const Mutation = {
 
     return post;
   },
-  deletePost(parent, args, { posts, comments }, info) {
+  deletePost(parent, args, { posts, comments, pubsub }, info) {
     const postIndex = posts.findIndex(post => post.id === args.id);
 
     if (postIndex === -1) throw new Error('Post not found')
 
-    const [deletedPost] = posts.splice(postIndex);
+    const [deletedPost] = posts.splice(postIndex, 1);
     comments = comments.filter(comment => comment.post !== args.id);
+    if (deletedPost.published) {
+      pubsub.publish('post', {
+        post: {
+          mutation: 'DELETED',
+          data: deletedPost
+        }
+      });
+    }
     return deletedPost;
   },
   addComment(parent, args, { comments, users, posts, pubsub }, info) {
