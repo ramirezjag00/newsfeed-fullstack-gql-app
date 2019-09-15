@@ -21,14 +21,39 @@ const Mutation = {
     }
     return post;
   },
-  updatePost(parent, { id, data }, { posts }, info) {
+  updatePost(parent, { id, data }, { posts, pubsub }, info) {
     const { title, body, published } = data;
     const post = posts.find(post => post.id === id);
+    const originalPost = { ...post };
     if (!post) throw new Error('Post not found');
 
     if (title) post.title = title;
     if (body) post.body = body;
-    if (typeof published === 'boolean') post.published = published;
+    if (typeof published === 'boolean') {
+      post.published = published;
+      if (originalPost.published && !post.published) {
+        pubsub.publish('post', {
+          post: {
+            mutation: 'DELETED',
+            data: originalPost
+          }
+        });
+      } else if (!originalPost.published && post.published) {
+        pubsub.publish('post', {
+          post: {
+            mutation: 'CREATED',
+            data: post
+          }
+        });
+      }
+    } else if (post.published) {
+      pubsub.publish('post', {
+        post: {
+          mutation: 'UPDATED',
+          data: post
+        }
+      });
+    }
 
     return post;
   },
