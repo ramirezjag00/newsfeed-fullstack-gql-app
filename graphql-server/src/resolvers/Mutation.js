@@ -33,7 +33,7 @@ const Mutation = {
     comments = comments.filter(comment => comment.post !== args.id);
     return deletedPost;
   },
-  addComment(parent, args, { comments, users, posts }, info) {
+  addComment(parent, args, { comments, users, posts, pubsub }, info) {
     const userExists = users.some(user => user.id === args.data.author);
     const isValidPost = posts.some(post => post.id === args.data.post && post.published);
 
@@ -45,6 +45,7 @@ const Mutation = {
       ...args.data
     };
     comments.push(comment);
+    pubsub.publish(`comment ${args.data.post}`, { comment });
     return comment;
   },
   updateComment(parent, { id, data }, { comments }, info) {
