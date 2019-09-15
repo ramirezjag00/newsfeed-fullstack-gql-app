@@ -11,7 +11,12 @@ const Mutation = {
       ...args.data
     };
     posts.push(post);
-    if (args.data.published) pubsub.publish('post', { post });
+    if (args.data.published) pubsub.publish('post', {
+      post: {
+        mutation: 'CREATED',
+        data: post
+      }
+    });
     return post;
   },
   updatePost(parent, { id, data }, { posts }, info) {
