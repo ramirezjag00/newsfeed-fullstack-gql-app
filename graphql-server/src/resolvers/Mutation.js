@@ -1,16 +1,17 @@
 import uuidv4 from 'uuid/v4';
 
 const Mutation = {
-  addPost(parent, args, { posts, users }, info) {
+  addPost(parent, args, { posts, users, pubsub }, info) {
     const userExists = users.some(user => user.id === args.data.author);
 
     if (!userExists) throw new Error(`userId ${args.data.author} does not exist`);
-
+    
     const post = {
       id: uuidv4(),
       ...args.data
     };
     posts.push(post);
+    if (args.data.published) pubsub.publish('post', { post });
     return post;
   },
   updatePost(parent, { id, data }, { posts }, info) {
