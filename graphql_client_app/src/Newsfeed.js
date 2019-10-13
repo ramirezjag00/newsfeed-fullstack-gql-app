@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import {
+  ActivityIndicator,
   StyleSheet,
   Text,
   View,
@@ -27,9 +28,18 @@ const GET_POSTS = gql`
 const Newsfeed = () => {
   const [posts, setPosts] = useState([]);
   const { loading, error, data } = useQuery(GET_POSTS);
-  if (loading) return <Text style={styles.loading}>Loading ...</Text>;
-  if (error) console.log(error);
-  if (!loading && !error && data.posts !== posts) setPosts(data.posts);
+  if (loading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator animating={loading} size="large" color="#F58855" />
+      </View>
+    );
+  } else if (error) {
+    console.log(error);
+  } else if (!loading && !error && data.posts !== posts) {
+    setPosts(data.posts);
+  }
+
   return (
     <View style={styles.container}>
       <Posts items={posts} />
@@ -43,10 +53,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   loading: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
-    color: 'red',
-    fontSize: 20,
   },
 });
 
