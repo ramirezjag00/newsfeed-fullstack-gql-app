@@ -9,6 +9,7 @@ import gql from 'graphql-tag';
 import { useQuery, useSubscription } from '@apollo/react-hooks';
 
 import Posts from './Posts';
+import Loading from './Loading';
 
 const GET_POSTS = gql`
   query {
@@ -45,13 +46,9 @@ const POST_SUBSCRIPTIONS = gql`
 
 const Newsfeed = () => {
   const [posts, setPosts] = useState([]);
-  const { subscribeToMore, loading, error, data } = useQuery(GET_POSTS);
+  const { loading, error, data } = useQuery(GET_POSTS);
   if (loading) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator animating={loading} size="large" color="#F58855" />
-      </View>
-    );
+    return <Loading loading={loading} />;
   } else if (error) {
     console.log(error);
   } else if (!loading && !error && data.posts !== posts) {
@@ -61,18 +58,15 @@ const Newsfeed = () => {
   const subscribeToNewPosts = () => {
     const { data: { post: { data } }, loading } = useSubscription(POST_SUBSCRIPTIONS);
     if (loading) {
-      return (
-        <View style={styles.loading}>
-          <ActivityIndicator animating={loading} size="large" color="#F58855" />
-        </View>
-      );
+      return <Loading loading={loading} />;
+    } else if (!loading) {
+      setPosts(data);
     }
-    return data;
   };
 
   useEffect(() => {
     subscribeToNewPosts();
-  }, [data]);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -85,15 +79,6 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     width: '100%',
-  },
-  loading: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 
