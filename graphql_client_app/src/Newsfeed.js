@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import gql from 'graphql-tag';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useSubscription } from '@apollo/react-hooks';
 
 import Posts from './Posts';
 
@@ -25,9 +25,27 @@ const GET_POSTS = gql`
   }
 `;
 
+const POST_SUBSCRIPTIONS = gql`
+  subscription {
+    post {
+      mutation
+      data {
+        id
+        body
+        author {
+          name
+        }
+        comments {
+          id
+        }
+      }
+    }
+  }
+`;
+
 const Newsfeed = () => {
   const [posts, setPosts] = useState([]);
-  const { loading, error, data } = useQuery(GET_POSTS);
+  const { subscribeToMore, loading, error, data } = useQuery(GET_POSTS);
   if (loading) {
     return (
       <View style={styles.loading}>
@@ -39,6 +57,22 @@ const Newsfeed = () => {
   } else if (!loading && !error && data.posts !== posts) {
     setPosts(data.posts);
   }
+
+  const subscribeToNewPosts = () => {
+    const { data: { post: { data } }, loading } = useSubscription(POST_SUBSCRIPTIONS);
+    if (loading) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator animating={loading} size="large" color="#F58855" />
+        </View>
+      );
+    }
+    return data;
+  };
+
+  useEffect(() => {
+    subscribeToNewPosts();
+  }, [data]);
 
   return (
     <View style={styles.container}>
