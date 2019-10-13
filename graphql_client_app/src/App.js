@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
   Text,
   View
 } from 'react-native';
@@ -11,9 +10,10 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import Newsfeed from './Newsfeed';
+import Header from './Header';
 
 const client = new ApolloClient({
-  link: new HttpLink({ 
+  link: new HttpLink({
     uri: 'http://localhost:4000',
   }),
   cache: new InMemoryCache(),
@@ -21,24 +21,14 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
+    <SafeAreaView style={{ backgroundColor: '#F58855' }} />
     <SafeAreaView>
-      <View style={styles.container}>
-        <Text style={styles.containerTitle}>NewsFeed</Text>
+      <View>
+        <Header />
         <Newsfeed />
       </View>
     </SafeAreaView>
   </ApolloProvider>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    margin: 20,
-  },
-  containerTitle: {
-    color: '#000000',
-    fontSize: 35,
-    textAlign: 'center',
-  }
-});
 
 export default App;
