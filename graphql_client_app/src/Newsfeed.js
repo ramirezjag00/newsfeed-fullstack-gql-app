@@ -1,8 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
-  Text,
   View,
 } from 'react-native';
 import gql from 'graphql-tag';
@@ -55,18 +53,16 @@ const Newsfeed = () => {
     setPosts(data.posts);
   }
 
-  const subscribeToNewPosts = () => {
-    const { data: { post: { data } }, loading } = useSubscription(POST_SUBSCRIPTIONS);
-    if (loading) {
-      return <Loading loading={loading} />;
-    } else if (!loading) {
-      setPosts(data);
-    }
-  };
-
   useEffect(() => {
-    subscribeToNewPosts();
-  }, []);
+    () => {
+      const { data: datum, loading: ludeng } = useSubscription(POST_SUBSCRIPTIONS);
+      if (ludeng) {
+        return <Loading loading={ludeng} />;
+      } else if (!ludeng) {
+        setPosts([datum.post.data, posts]);
+      }
+    };
+  });
 
   return (
     <View style={styles.container}>
