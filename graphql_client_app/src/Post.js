@@ -9,7 +9,21 @@ import PropTypes from 'prop-types';
 import Portrait from './Portrait';
 
 const Post = ({ item }) => {
-  const { body, author: { name }, comments } = item;
+  let body = '';
+  let name = '';
+  let comments = [];
+  if (!item) {
+    return null;
+  } else if (
+    item.body &&
+    item.author &&
+    item.author.name &&
+    item.comments
+  ) {
+    body = item.body;
+    name = item.author.name;
+    comments = item.comments;
+  }
   return (
     <Fragment>
       <View style={styles.container}>
