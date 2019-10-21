@@ -3,8 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import gql from 'graphql-tag';
 import { useQuery, useSubscription } from '@apollo/react-hooks';
 
-import Posts from './Posts';
 import Loading from './Loading';
+import PostOptions from './PostOptions';
+import Posts from './Posts';
 
 const GET_POSTS = gql`
   query {
@@ -41,6 +42,7 @@ const POST_SUBSCRIPTIONS = gql`
 
 const Newsfeed = () => {
   const [posts, setPosts] = useState([]);
+  const [modalVisibility, setModalVisibility] = useState(false);
   const { data: subscriptionData } = useSubscription(POST_SUBSCRIPTIONS);
   const { loading, error, data } = useQuery(GET_POSTS);
   if (loading) {
@@ -71,7 +73,14 @@ const Newsfeed = () => {
 
   return (
     <View style={styles.container}>
-      <Posts items={posts} />
+      <Posts
+        items={posts}
+        setModalVisibility={setModalVisibility}
+      />
+      <PostOptions
+        setModalVisibility={setModalVisibility}
+        visibility={modalVisibility}
+      />
     </View>
   );
 };
