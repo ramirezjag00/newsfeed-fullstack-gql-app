@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   postSpacer: {
     height: 10,
-    backgroundColor: '#aeaeae',
+    backgroundColor: '#dadada',
   },
   postHeader: {
     flexDirection: 'row',
