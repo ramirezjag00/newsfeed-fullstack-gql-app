@@ -26,10 +26,10 @@ const PostOptions = ({ visibility, setModalVisibility }) => {
         useNativeDriver={true}
       >
         <View style={styles.container}>
-          <TouchableOpacity onPress={() => setModalVisibility(false)} style={styles.closeButton}>
+          <TouchableOpacity onPress={() => setModalVisibility(false)} style={styles.closeAction}>
             <Image
               source={closeButton}
-              style={styles.actionButton}
+              style={styles.closeButton}
             />
           </TouchableOpacity>
           <View style={styles.line} />
@@ -67,11 +67,17 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
   },
-  closeButton: {
+  closeAction: {
     marginRight: 5,
     marginTop: 5,
+    marginBottom: 3,
     justifyContent: 'center',
     alignSelf: 'flex-end',
+  },
+  closeButton: {
+    tintColor: '#7a7a7a',
+    height: 15,
+    width: 15,
   },
   line: {
     borderBottomColor: '#dadada',
@@ -85,6 +91,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 15,
     paddingBottom: 15,
+    alignItems: 'center',
   },
   actionButton: {
     tintColor: '#7a7a7a',
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
   actionText: {
     paddingLeft: 15,
     color: '#7a7a7a',
-    fontSize: 16,
+    fontSize: 14,
   },
 });
 
