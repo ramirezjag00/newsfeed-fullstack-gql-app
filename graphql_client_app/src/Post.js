@@ -1,14 +1,17 @@
 import React, { Fragment } from 'react';
 import {
+  Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
 import Portrait from './Portrait';
+import meatballs from '../assets/outline_more_horiz_black_48dp.png';
 
-const Post = ({ item }) => {
+const Post = ({ item, setModalVisibility }) => {
   const { body, author: { name }, comments } = item;
   return (
     <Fragment>
@@ -19,7 +22,12 @@ const Post = ({ item }) => {
               <Text style={styles.postAuthor}>{name}</Text>
               <Text style={styles.postDate}>Yesterday at 6:09 PM</Text>
             </View>
-            <Text style={styles.postOptions}>...</Text>
+            <TouchableOpacity
+              style={styles.postOptionsContainer}
+              onPress={() => setModalVisibility(true)}
+            >
+              <Image source={meatballs} style={styles.postOptions} />
+            </TouchableOpacity>
           </View>
         <Text style={styles.body}>
           {body}
@@ -35,6 +43,7 @@ const Post = ({ item }) => {
 
 Post.propTypes = {
   item: PropTypes.object.isRequired,
+  setModalVisibility: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
@@ -61,11 +70,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
-  postOptions: {
-    color: '#222222',
-    fontSize: 20,
+  postOptionsContainer: {
     alignSelf: 'flex-start',
     justifyContent: 'flex-end',
+  },
+  postOptions: {
+    height: 20,
+    width: 20,
+    tintColor: '#222222',
   },
   postDate: {
     color: '#222222',

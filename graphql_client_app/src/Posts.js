@@ -4,9 +4,17 @@ import PropTypes from 'prop-types';
 
 import Post from './Post';
 
-const Posts = ({ items }) => {
+const Posts = ({ items, setModalVisibility }) => {
   if (items.length === 0) return null;
-  const posts = items.map((item, index) => <Post key={index} item={item} />);
+  const posts = items.map((item, index) => {
+    return (
+      <Post
+        item={item}
+        key={index}
+        setModalVisibility={setModalVisibility}
+      />
+    );
+  });
   return (
     <ScrollView
       horizontal={false}
@@ -23,6 +31,7 @@ const Posts = ({ items }) => {
 
 Posts.propTypes = {
   items: PropTypes.array.isRequired,
+  setModalVisibility: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
