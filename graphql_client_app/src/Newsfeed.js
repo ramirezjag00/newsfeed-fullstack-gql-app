@@ -50,8 +50,22 @@ const Newsfeed = () => {
   } else if (!loading && !error && data.posts !== posts && !subscriptionData) {
     setPosts(data.posts.reverse());
   } else if (subscriptionData && posts.length !== 0) {
-    if (subscriptionData.post.data.id !== posts[0].id) {
-      setPosts([subscriptionData.post.data, ...posts]);
+    const { post: { mutation, data: postData } } = subscriptionData;
+    const postIndex = posts.findIndex(post => post.id === postData.id);
+    if (postIndex !== -1) {
+      let postsCopy = posts;
+      if (mutation === 'DELETED') {
+        postsCopy.splice(postIndex, 1);
+        setPosts(postsCopy);
+      } else if (mutation === 'UPDATED') {
+        const originalPost = posts[postIndex];
+        if (originalPost.body !== postData.body || originalPost.title !== postData.title) {
+          postsCopy.splice(postIndex, 1, postData);
+          setPosts(postsCopy);
+        }
+      }
+    } else if (mutation === 'CREATED') {
+      setPosts([postData, ...posts]);
     }
   }
 
