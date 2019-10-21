@@ -39,7 +39,7 @@ Post.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    height: 110,
+    minHeight: 110,
     padding: 10,
     backgroundColor: '#ffffff',
   },
