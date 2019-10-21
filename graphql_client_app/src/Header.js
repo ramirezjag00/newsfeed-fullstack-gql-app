@@ -19,7 +19,6 @@ const Header = () => {
           style={styles.textInput}
           placeholder={placeholder}
           placeholderTextColor={'#aeaeae'}
-          textAlign={'center'}
         />
       </View>
     </View>
@@ -51,6 +50,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#ffffff',
     fontSize: 12,
+    paddingLeft: 10,
   },
 });
 
