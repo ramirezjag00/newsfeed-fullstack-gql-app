@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -7,12 +7,40 @@ import {
   View,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
 
 import Portrait from './Portrait';
 import meatballs from '../assets/outline_more_horiz_black_48dp.png';
+import { useSubscription } from '@apollo/react-hooks';
 
-const Post = ({ item, setModalVisibility }) => {
-  const { body, author: { name }, comments } = item;
+const COMMENT_SUBSCRIPTIONS = gql`
+  subscription comments($id: ID!) {
+    comment (postId: $id) {
+      mutation
+      data {
+        id
+      }
+    }
+  }
+`;
+
+const Post = ({ item, onCommentsTrigger, setModalVisibility }) => {
+  const { id, body, author: { name }, comments } = item;
+  let commentsCopy = comments;
+  const [commentsCount, setCommentsCount] = useState(commentsCopy.length);
+  const { data } = useSubscription(COMMENT_SUBSCRIPTIONS, { variables: { id } });
+  if (data && commentsCopy.length === commentsCount) {
+    const { comment: { mutation, data: commentData } } = data;
+    const commentIndex = commentsCopy.findIndex(comment => comment.id === commentData.id);
+    if (commentIndex !== -1 && mutation === 'DELETED') {
+      commentsCopy.splice(commentIndex,1);
+      setCommentsCount(commentsCopy.length);
+    } else if (commentIndex === -1 && mutation === 'CREATED') {
+      commentsCopy.push(commentData);
+      setCommentsCount(commentsCopy.length);
+    }
+  }
+
   return (
     <Fragment>
       <View style={styles.container}>
@@ -32,9 +60,12 @@ const Post = ({ item, setModalVisibility }) => {
         <Text style={styles.body}>
           {body}
         </Text>
-        <View style={styles.commentContainer}>
-          <Text style={styles.commentIndicator}>{`${comments.length} comments`}</Text>
-        </View>
+        <TouchableOpacity
+          style={styles.commentContainer}
+          onPress={() => onCommentsTrigger(id, true)}
+        >
+          <Text style={styles.commentIndicator}>{`${commentsCount} comments`}</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.postSpacer} />
     </Fragment>
@@ -43,6 +74,7 @@ const Post = ({ item, setModalVisibility }) => {
 
 Post.propTypes = {
   item: PropTypes.object.isRequired,
+  onCommentsTrigger: PropTypes.func,
   setModalVisibility: PropTypes.func,
 };
 
