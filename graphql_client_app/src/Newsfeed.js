@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import gql from 'graphql-tag';
 import { useQuery, useSubscription } from '@apollo/react-hooks';
 
@@ -72,7 +72,7 @@ const Newsfeed = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <Posts
         items={posts}
         setModalVisibility={setModalVisibility}
@@ -84,12 +84,5 @@ const Newsfeed = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-  },
-});
 
 export default Newsfeed;
