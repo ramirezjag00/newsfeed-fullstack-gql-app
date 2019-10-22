@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import gql from 'graphql-tag';
 import { useQuery, useSubscription } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 import Loading from './Loading';
 import OptionsModal from './OptionsModal';
 import Posts from './Posts';
+import Comments from './Comments';
 
 const GET_POSTS = gql`
   query {
@@ -43,16 +44,18 @@ const POST_SUBSCRIPTIONS = gql`
 const Newsfeed = () => {
   const [posts, setPosts] = useState([]);
   const [modalVisibility, setModalVisibility] = useState(false);
-  const { data: subscriptionData } = useSubscription(POST_SUBSCRIPTIONS);
+  const [commentsVisibility, setCommentsVisibility] = useState(false);
+  const [postId, setPostId] = useState('');
+  const { data: postSubscriptionData } = useSubscription(POST_SUBSCRIPTIONS);
   const { loading, error, data } = useQuery(GET_POSTS);
   if (loading) {
     return <Loading loading={loading} />;
   } else if (error) {
     console.log(error);
-  } else if (!loading && !error && data.posts !== posts && !subscriptionData) {
+  } else if (!loading && !error && data.posts !== posts && !postSubscriptionData) {
     setPosts(data.posts.reverse());
-  } else if (subscriptionData && posts.length !== 0) {
-    const { post: { mutation, data: postData } } = subscriptionData;
+  } else if (postSubscriptionData && posts.length !== 0) {
+    const { post: { mutation, data: postData } } = postSubscriptionData;
     const postIndex = posts.findIndex(post => post.id === postData.id);
     if (postIndex !== -1) {
       let postsCopy = posts;
@@ -71,11 +74,23 @@ const Newsfeed = () => {
     }
   }
 
+  const onCommentsTrigger = (id, visibility) => {
+    setCommentsVisibility(visibility);
+    setPostId(id);
+  };
+
   return (
     <View>
       <Posts
         items={posts}
+        onCommentsTrigger={onCommentsTrigger}
         setModalVisibility={setModalVisibility}
+      />
+      <Comments
+        id={postId}
+        onCommentsTrigger={onCommentsTrigger}
+        setCommentsVisibility={setCommentsVisibility}
+        visibility={commentsVisibility}
       />
       <OptionsModal
         setModalVisibility={setModalVisibility}
