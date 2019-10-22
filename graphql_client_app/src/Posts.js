@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Post from './Post';
 
-const Posts = ({ items, setModalVisibility }) => {
+const Posts = ({ items, setModalVisibility, onCommentsTrigger }) => {
   if (items.length === 0) return null;
   const posts = items.map((item, index) => {
     return (
@@ -12,6 +12,7 @@ const Posts = ({ items, setModalVisibility }) => {
         item={item}
         key={index}
         setModalVisibility={setModalVisibility}
+        onCommentsTrigger={onCommentsTrigger}
       />
     );
   });
@@ -31,6 +32,7 @@ const Posts = ({ items, setModalVisibility }) => {
 
 Posts.propTypes = {
   items: PropTypes.array.isRequired,
+  onCommentsTrigger: PropTypes.func,
   setModalVisibility: PropTypes.func,
 };
 
