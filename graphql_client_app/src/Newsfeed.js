@@ -95,6 +95,7 @@ const Newsfeed = () => {
       <OptionsModal
         setModalVisibility={setModalVisibility}
         visibility={modalVisibility}
+        text={'Post'}
       />
     </View>
   );

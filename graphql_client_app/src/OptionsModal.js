@@ -13,11 +13,15 @@ import closeButton from '../assets/outline_clear_black_48dp.png';
 import editButton from '../assets/outline_edit_black_48dp.png';
 import deleteButton from '../assets/outline_delete_black_48dp.png';
 
-const OptionsModal = ({ visibility, setModalVisibility }) => {
+const OptionsModal = ({ visibility, setModalVisibility, text }) => {
+  const edit = `Edit ${text}`;
+  const remove = `Delete ${text}`;
+
   return (
     <View>
       <Modal
         animationIn={'slideInUp'}
+        animationOut={'slideOutDown'}
         backdropColor={'#222222'}
         backdropOpacity={0.50}
         isVisible={visibility}
@@ -39,14 +43,14 @@ const OptionsModal = ({ visibility, setModalVisibility }) => {
                 source={editButton}
                 style={styles.actionButton}
               />
-              <Text style={styles.actionText}>Edit Post</Text>
+              <Text style={styles.actionText}>{edit}</Text>
             </View>
             <View style={styles.actionRow}>
               <Image
                 source={deleteButton}
                 style={styles.actionButton}
               />
-              <Text style={styles.actionText}>Delete Post</Text>
+              <Text style={styles.actionText}>{remove}</Text>
             </View>
           </View>
         </View>
@@ -106,8 +110,9 @@ const styles = StyleSheet.create({
 });
 
 OptionsModal.propTypes = {
-  visibility: PropTypes.bool,
   setModalVisibility: PropTypes.func,
+  text: PropTypes.string,
+  visibility: PropTypes.bool,
 };
 
 export default OptionsModal;

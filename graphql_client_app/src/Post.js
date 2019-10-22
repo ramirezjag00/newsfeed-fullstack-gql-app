@@ -46,17 +46,17 @@ const Post = ({ item, handleCommentsVisibility, setModalVisibility }) => {
       <View style={styles.container}>
         <View style={styles.postHeader}>
           <Portrait />
-            <View style={styles.postHeaderSecondLayer}>
-              <Text style={styles.postAuthor}>{name}</Text>
-              <Text style={styles.postDate}>Yesterday at 6:09 PM</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.postOptionsContainer}
-              onPress={() => setModalVisibility(true)}
-            >
-              <Image source={meatballs} style={styles.postOptions} />
-            </TouchableOpacity>
+          <View style={styles.postHeaderSecondLayer}>
+            <Text style={styles.postAuthor}>{name}</Text>
+            <Text style={styles.postDate}>Yesterday at 6:09 PM</Text>
           </View>
+          <TouchableOpacity
+            style={styles.postOptionsContainer}
+            onPress={() => setModalVisibility(true)}
+          >
+            <Image source={meatballs} style={styles.postOptions} />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.body}>
           {body}
         </Text>
