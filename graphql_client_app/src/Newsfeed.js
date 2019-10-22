@@ -74,7 +74,7 @@ const Newsfeed = () => {
     }
   }
 
-  const onCommentsTrigger = (id, visibility) => {
+  const handleCommentsVisibility = (id, visibility) => {
     setCommentsVisibility(visibility);
     setPostId(id);
   };
@@ -83,12 +83,12 @@ const Newsfeed = () => {
     <View>
       <Posts
         items={posts}
-        onCommentsTrigger={onCommentsTrigger}
+        handleCommentsVisibility={handleCommentsVisibility}
         setModalVisibility={setModalVisibility}
       />
       <Comments
         id={postId}
-        onCommentsTrigger={onCommentsTrigger}
+        handleCommentsVisibility={handleCommentsVisibility}
         setCommentsVisibility={setCommentsVisibility}
         visibility={commentsVisibility}
       />

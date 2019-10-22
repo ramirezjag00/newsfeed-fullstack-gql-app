@@ -24,7 +24,7 @@ const COMMENT_SUBSCRIPTIONS = gql`
   }
 `;
 
-const Post = ({ item, onCommentsTrigger, setModalVisibility }) => {
+const Post = ({ item, handleCommentsVisibility, setModalVisibility }) => {
   const { id, body, author: { name }, comments } = item;
   let commentsCopy = comments;
   const [commentsCount, setCommentsCount] = useState(commentsCopy.length);
@@ -62,7 +62,7 @@ const Post = ({ item, onCommentsTrigger, setModalVisibility }) => {
         </Text>
         <TouchableOpacity
           style={styles.commentContainer}
-          onPress={() => onCommentsTrigger(id, true)}
+          onPress={() => handleCommentsVisibility(id, true)}
         >
           <Text style={styles.commentIndicator}>{`${commentsCount} comments`}</Text>
         </TouchableOpacity>
@@ -74,7 +74,7 @@ const Post = ({ item, onCommentsTrigger, setModalVisibility }) => {
 
 Post.propTypes = {
   item: PropTypes.object.isRequired,
-  onCommentsTrigger: PropTypes.func,
+  handleCommentsVisibility: PropTypes.func,
   setModalVisibility: PropTypes.func,
 };
 
