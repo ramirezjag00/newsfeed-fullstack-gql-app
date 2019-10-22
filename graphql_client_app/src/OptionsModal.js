@@ -13,7 +13,7 @@ import closeButton from '../assets/outline_clear_black_48dp.png';
 import editButton from '../assets/outline_edit_black_48dp.png';
 import deleteButton from '../assets/outline_delete_black_48dp.png';
 
-const PostOptions = ({ visibility, setModalVisibility }) => {
+const OptionsModal = ({ visibility, setModalVisibility }) => {
   return (
     <View>
       <Modal
@@ -105,9 +105,9 @@ const styles = StyleSheet.create({
   },
 });
 
-PostOptions.propTypes = {
+OptionsModal.propTypes = {
   visibility: PropTypes.bool,
   setModalVisibility: PropTypes.func,
 };
 
-export default PostOptions;
+export default OptionsModal;

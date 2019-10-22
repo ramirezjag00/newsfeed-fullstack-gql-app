@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { useQuery, useSubscription } from '@apollo/react-hooks';
 
 import Loading from './Loading';
-import PostOptions from './PostOptions';
+import OptionsModal from './OptionsModal';
 import Posts from './Posts';
 
 const GET_POSTS = gql`
@@ -77,7 +77,7 @@ const Newsfeed = () => {
         items={posts}
         setModalVisibility={setModalVisibility}
       />
-      <PostOptions
+      <OptionsModal
         setModalVisibility={setModalVisibility}
         visibility={modalVisibility}
       />
