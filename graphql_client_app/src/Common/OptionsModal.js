@@ -68,6 +68,7 @@ const OptionsModal = ({
       <Edit
         body={body}
         id={id}
+        closeOptionsModal={setModalVisibility}
         setModalVisibility={setEditModalVisibility}
         text={text}
         visibility={editModalVisibility}

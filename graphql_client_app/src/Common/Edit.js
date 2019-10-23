@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
-import gql from 'graphql-tag';
 import {
   StyleSheet,
   Text,
@@ -9,18 +8,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useMutation } from '@apollo/react-hooks';
 
 import Portrait from './Portrait';
+import useUpdate from '../utils/useUpdate';
 
 const Edit = ({
   body,
+  closeOptionsModal,
   id,
   setModalVisibility,
   text,
   visibility,
 }) => {
   const [value, setValue] = useState(body);
+  const gqlUpdateAction = useUpdate(id, text, value);
+  
   return (
     <Modal
       animationIn={'slideInUp'}
@@ -62,7 +64,11 @@ const Edit = ({
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.actionButton, styles.updateButton]}
-                onPress={() => {}}
+                onPress={() => {
+                  gqlUpdateAction();
+                  setModalVisibility(false);
+                  closeOptionsModal(false);
+                }}
               >
                 <Text style={styles.update}>
                   UPDATE
@@ -156,6 +162,7 @@ const styles = StyleSheet.create({
 
 Edit.propTypes = {
   body: PropTypes.string.isRequired,
+  closeOptionsModal: PropTypes.func.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   setModalVisibility: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
