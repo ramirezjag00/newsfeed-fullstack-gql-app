@@ -8,7 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useQuery, useSubscription } from '@apollo/react-hooks';
+import {
+  useMutation,
+  useQuery,
+  useSubscription,
+} from '@apollo/react-hooks';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import Modal from 'react-native-modal';
@@ -54,6 +58,25 @@ const GET_POST_COMMENTS = gql`
   }
 `;
 
+const CREATE_COMMENT = gql`
+  mutation addComment($text: String!, $postId: ID!) {
+    addComment(data: {
+      text: $text,
+      post: $postId
+      author: 4,
+    }) {
+      id
+      text
+      author {
+        name
+      }
+      post {
+        id
+      }
+    }
+  }
+`;
+
 const Comments = ({
   id,
   visibility,
@@ -62,6 +85,8 @@ const Comments = ({
   if (!id && !visibility) return null;
   const placeholder = 'What do you want to share in this?';
   const [value, setValue] = useState('');
+  const gqlVariable = { variables: { text: value, postId: id } };
+  const [addComment] = useMutation(CREATE_COMMENT);
   const isValid = value.length >= 3;
   const [comments, setComments] = useState([]);
   const { data: commentSubscriptionData } = useSubscription(COMMENT_SUBSCRIPTIONS, { variables: { id } });
@@ -129,7 +154,9 @@ const Comments = ({
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
         >
-          {commentsUI}
+          <View style={styles.commentsContainer}>
+            {commentsUI}
+          </View>
         </ScrollView>
         <KeyboardAvoidingView enabled behavior={'position'} keyboardVerticalOffset={30}>
           <View style={styles.commentContainer}>
@@ -145,7 +172,10 @@ const Comments = ({
             />
             <TouchableOpacity
                 style={styles.sendContainer}
-                onPress={() => {}}
+                onPress={() => {
+                  addComment(gqlVariable);
+                  setValue('');
+                }}
                 disabled={!isValid}
               >
                 <Image
@@ -188,7 +218,11 @@ const styles = StyleSheet.create({
     borderBottomColor: '#dadada',
     borderBottomWidth: 1,
   },
+  commentsContainer: {
+    paddingBottom: 100,
+  },
   commentContainer: {
+    backgroundColor: '#ffffff',
     width: '100%',
     borderTopColor: '#dadada',
     borderTopWidth: 1,
