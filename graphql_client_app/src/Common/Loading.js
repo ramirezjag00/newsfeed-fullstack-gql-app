@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 Loading.propTypes = {
-  loading: PropTypes.bool,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default Loading;

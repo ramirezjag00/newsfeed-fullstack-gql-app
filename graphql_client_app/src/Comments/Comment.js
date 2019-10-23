@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
@@ -8,31 +8,34 @@ import {
 } from 'react-native';
 
 import Portrait from '../Common/Portrait';
+import OptionsModal from '../Common/OptionsModal';
 
-const Comment = ({
-  name,
-  setModalVisibility,
-  text,
-}) => {
+const Comment = ({ item }) => {
+  const { id, text, author: { name } } = item;
+  const [modalVisibility, setModalVisibility] = useState(false);
+
   return (
-    <View style={styles.commentContainer}>
-      <Portrait />
-      <TouchableOpacity
-        style={styles.commentSecondaryContainer}
-        onLongPress={() => setModalVisibility(true)}
-      >
-        <Text style={styles.commentAuthor}>{name}</Text>
-        <Text style={styles.commentText}>{text}</Text>
-        <Text style={styles.commentDate}>3h</Text>
-      </TouchableOpacity>
-    </View>
+    <Fragment>
+      <View style={styles.commentContainer}>
+        <Portrait />
+        <TouchableOpacity
+          style={styles.commentSecondaryContainer}
+          onLongPress={() => setModalVisibility(true)}
+        >
+          <Text style={styles.commentAuthor}>{name}</Text>
+          <Text style={styles.commentText}>{text}</Text>
+          <Text style={styles.commentDate}>3h</Text>
+        </TouchableOpacity>
+      </View>
+      <OptionsModal
+        body={text}
+        id={id}
+        setModalVisibility={setModalVisibility}
+        text={'Comment'}
+        visibility={modalVisibility}
+      />
+    </Fragment>
   );
-};
-
-Comment.propTypes = {
-  name: PropTypes.string,
-  setModalVisibility: PropTypes.func,
-  text: PropTypes.string,
 };
 
 const styles = StyleSheet.create({
@@ -61,5 +64,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
 });
+
+Comment.propTypes = {
+  item: PropTypes.object.isRequired,
+};
 
 export default Comment;

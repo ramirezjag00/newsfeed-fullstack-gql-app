@@ -81,11 +81,6 @@ const Post = ({ handleCommentsVisibility, item }) => {
   );
 };
 
-Post.propTypes = {
-  item: PropTypes.object.isRequired,
-  handleCommentsVisibility: PropTypes.func,
-};
-
 const styles = StyleSheet.create({
   container: {
     minHeight: 110,
@@ -135,5 +130,10 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
 });
+
+Post.propTypes = {
+  item: PropTypes.object.isRequired,
+  handleCommentsVisibility: PropTypes.func.isRequired,
+};
 
 export default Post;

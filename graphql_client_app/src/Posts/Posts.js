@@ -32,16 +32,16 @@ const Posts = ({
   );
 };
 
-Posts.propTypes = {
-  handleCommentsVisibility: PropTypes.func,
-  items: PropTypes.array.isRequired,
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 300,
   },
 });
+
+Posts.propTypes = {
+  handleCommentsVisibility: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
+};
 
 export default Posts;

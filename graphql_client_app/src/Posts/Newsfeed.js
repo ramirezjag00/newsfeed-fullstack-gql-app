@@ -43,7 +43,6 @@ const POST_SUBSCRIPTIONS = gql`
 const Newsfeed = () => {
   const [posts, setPosts] = useState([]);
   const [commentsVisibility, setCommentsVisibility] = useState(false);
-  const [editModalVisibility, setEditModalVisibility] = useState(false);
   const [postId, setPostId] = useState('');
   const { data: postSubscriptionData } = useSubscription(POST_SUBSCRIPTIONS);
   const { loading, error, data } = useQuery(GET_POSTS);

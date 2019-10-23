@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import Modal from 'react-native-modal';
 
-import OptionsModal from '../Common/OptionsModal';
 import Loading from '../Common/Loading';
 import Comment from '../Comments/Comment';
 
@@ -59,7 +58,6 @@ const Comments = ({
 }) => {
   if (!id && !visibility) return null;
   const [comments, setComments] = useState([]);
-  const [modalVisibility, setModalVisibility] = useState(false);
   const { data: commentSubscriptionData } = useSubscription(COMMENT_SUBSCRIPTIONS, { variables: { id } });
   const { data, error, loading } = useQuery(GET_POST_COMMENTS, { variables: { id } });
   if (loading) {
@@ -88,57 +86,47 @@ const Comments = ({
     }
   }
 
-  const commentsUI = comments.map(comment => {
-    const { id: commentId, text, author: { name } } = comment;
+  const commentsUI = comments.map((comment, index) => {
     return (
       <Comment
-        key={commentId}
-        name={name}
-        setModalVisibility={setModalVisibility}
-        text={text}
+        item={comment}
+        key={index}
       />
     );
   });
 
   return (
-    <View>
-      <Modal
-        animationIn={'slideInUp'}
-        animationOut={'slideOutDown'}
-        backdropColor={'#222222'}
-        backdropOpacity={0.50}
-        isVisible={visibility}
-        onBackdropPress={() => handleCommentsVisibility('', false)}
-        style={styles.modal}
-        useNativeDriver={true}
-      >
-        <View style={styles.container}>
-          <TouchableOpacity
-            onPress={() => handleCommentsVisibility('', false)}
-            style={styles.closeAction}
-          >
-            <Image
-              source={closeButton}
-              style={styles.closeButton}
-            />
-          </TouchableOpacity>
-          <View style={styles.line} />
-          <ScrollView
-            horizontal={false}
-            scrollEnabled
-            scrollEventThrottle={16}
-            showsVerticalScrollIndicator={false}
-          >
-            {commentsUI}
-          </ScrollView>
-        </View>
-        <OptionsModal
-          setModalVisibility={setModalVisibility}
-          visibility={modalVisibility}
-          text={'Comment'}
-        />
-      </Modal>
-    </View>
+    <Modal
+      animationIn={'slideInUp'}
+      animationOut={'slideOutDown'}
+      backdropColor={'#222222'}
+      backdropOpacity={0.50}
+      isVisible={visibility}
+      onBackdropPress={() => handleCommentsVisibility('', false)}
+      style={styles.modal}
+      useNativeDriver={true}
+    >
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => handleCommentsVisibility('', false)}
+          style={styles.closeAction}
+        >
+          <Image
+            source={closeButton}
+            style={styles.closeButton}
+          />
+        </TouchableOpacity>
+        <View style={styles.line} />
+        <ScrollView
+          horizontal={false}
+          scrollEnabled
+          scrollEventThrottle={16}
+          showsVerticalScrollIndicator={false}
+        >
+          {commentsUI}
+        </ScrollView>
+      </View>
+    </Modal>
   );
 };
 
@@ -174,7 +162,7 @@ const styles = StyleSheet.create({
 
 Comments.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  handleCommentsVisibility: PropTypes.func,
+  handleCommentsVisibility: PropTypes.func.isRequired,
   visibility: PropTypes.bool.isRequired,
 };
 
