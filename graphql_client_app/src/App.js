@@ -42,7 +42,7 @@ const client = new ApolloClient({
 const App = () => (
   <ApolloProvider client={client}>
     <SafeAreaView style={{ backgroundColor: '#F58855' }} />
-    <SafeAreaView>
+    <SafeAreaView style={{ paddingBottom: 20 }} >
       <View>
         <Header />
         <Newsfeed />
