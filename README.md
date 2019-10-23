@@ -9,7 +9,7 @@
 - [x] Posts Menu Overlay
 - [x] Comment Menu Overlay
 - [x] Comment Modal
-- [ ] Comment / Post Edit Page
+- [x] Comment / Post Edit Page
 - [ ] Loading Shimmering State `npm i react-native-shimmer-placeholder`
 - [ ] Empty / Error State `look for images`
 - [ ] Connectivity Offline State `npm install --save @react-native-community/netinfo`
