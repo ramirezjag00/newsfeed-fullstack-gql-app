@@ -82,7 +82,6 @@ const Comments = ({
   visibility,
   handleCommentsVisibility,
 }) => {
-  if (!id && !visibility) return null;
   const placeholder = 'What do you want to share in this?';
   const [value, setValue] = useState('');
   const gqlVariable = { variables: { text: value, postId: id } };
