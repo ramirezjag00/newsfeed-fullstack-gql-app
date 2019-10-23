@@ -89,7 +89,6 @@ const Newsfeed = () => {
       <Comments
         id={postId}
         handleCommentsVisibility={handleCommentsVisibility}
-        setCommentsVisibility={setCommentsVisibility}
         visibility={commentsVisibility}
       />
       <OptionsModal

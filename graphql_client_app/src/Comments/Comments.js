@@ -52,7 +52,11 @@ const GET_POST_COMMENTS = gql`
   }
 `;
 
-const Comments = ({ id, setCommentsVisibility, visibility, handleCommentsVisibility }) => {
+const Comments = ({
+  id,
+  visibility,
+  handleCommentsVisibility,
+}) => {
   if (!id && !visibility) return null;
   const [comments, setComments] = useState([]);
   const [modalVisibility, setModalVisibility] = useState(false);
@@ -171,7 +175,6 @@ const styles = StyleSheet.create({
 Comments.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   handleCommentsVisibility: PropTypes.func,
-  setCommentsVisibility: PropTypes.func,
   visibility: PropTypes.bool.isRequired,
 };
 
