@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     tintColor: '#7a7a7a',
-    height: 15,
-    width: 15,
+    height: 20,
+    width: 20,
   },
   line: {
     borderBottomColor: '#dadada',
