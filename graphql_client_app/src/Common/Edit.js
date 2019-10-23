@@ -45,6 +45,7 @@ const Edit = ({
           <Portrait style={{ paddingRight: 10 }} />
           <View style={styles.editSecondaryContainer}>
             <TextInput
+              autoFocus={true}
               keyboardType={'default'}
               multiline={true}
               onChangeText={post => setValue(post)}
