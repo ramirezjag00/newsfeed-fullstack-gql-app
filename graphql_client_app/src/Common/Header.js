@@ -7,6 +7,28 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/react-hooks';
+
+const CREATE_POST = gql`
+  mutation addPost($body: String!) {
+    addPost(data: {
+      title: "Sample",
+      body: $body,
+      published: true,
+      author: 4,
+    }) {
+      id
+      body
+      author {
+        name
+      }
+      comments {
+        id
+      }
+    }
+  }
+`;
 
 import Portrait from './Portrait';
 import sendButton from '../../assets/outline_send_black_48dp.png';
@@ -14,6 +36,8 @@ import sendButton from '../../assets/outline_send_black_48dp.png';
 const Header = () => {
   const placeholder = 'Tell us your recent Booky experience!';
   const [value, setValue] = useState('');
+  const gqlVariable = { variables: { body: value } };
+  const [addPost] = useMutation(CREATE_POST);
   const isValid = value.length >= 3;
   return (
     <View style={styles.container}>
@@ -33,7 +57,7 @@ const Header = () => {
           />
           <TouchableOpacity
             style={styles.sendContainer}
-            onPress={() => {}}
+            onPress={() => addPost(gqlVariable)}
             disabled={!isValid}
           >
             <Image
