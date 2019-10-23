@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -9,59 +9,72 @@ import {
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 
+import Edit from './Edit';
+
 import closeButton from '../../assets/outline_clear_black_48dp.png';
 import editButton from '../../assets/outline_edit_black_48dp.png';
 import deleteButton from '../../assets/outline_delete_black_48dp.png';
 
 const OptionsModal = ({
+  body,
+  id,
   setModalVisibility,
   text,
   visibility,
 }) => {
+  const [editModalVisibility, setEditModalVisibility] = useState(false);
   const edit = `Edit ${text}`;
   const remove = `Delete ${text}`;
 
   return (
-    <View>
-      <Modal
-        animationIn={'slideInUp'}
-        animationOut={'slideOutDown'}
-        backdropColor={'#222222'}
-        backdropOpacity={0.50}
-        isVisible={visibility}
-        onBackdropPress={() => setModalVisibility(false)}
-        style={styles.modal}
-        useNativeDriver={true}
-      >
-        <View style={styles.container}>
-          <TouchableOpacity onPress={() => setModalVisibility(false)} style={styles.closeAction}>
+    <Modal
+      animationIn={'slideInUp'}
+      animationOut={'slideOutDown'}
+      backdropColor={'#222222'}
+      backdropOpacity={0.50}
+      isVisible={visibility}
+      onBackdropPress={() => setModalVisibility(false)}
+      style={styles.modal}
+      useNativeDriver={true}
+    >
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => setModalVisibility(false)} style={styles.closeAction}>
+          <Image
+            source={closeButton}
+            style={styles.closeButton}
+          />
+        </TouchableOpacity>
+        <View style={styles.line} />
+        <View style={styles.actionContainer}>
+          <TouchableOpacity
+            style={styles.actionRow}
+            onPress={() => setEditModalVisibility(true)}
+          >
             <Image
-              source={closeButton}
-              style={styles.closeButton}
+              source={editButton}
+              style={styles.actionButton}
             />
+            <Text style={styles.actionText}>{edit}</Text>
           </TouchableOpacity>
-          <View style={styles.line} />
-          <View style={styles.actionContainer}>
-            <View style={styles.actionRow}>
-              <Image
-                source={editButton}
-                style={styles.actionButton}
-              />
-              <Text style={styles.actionText}>{edit}</Text>
-            </View>
-            <View style={styles.actionRow}>
-              <Image
-                source={deleteButton}
-                style={styles.actionButton}
-              />
-              <Text style={styles.actionText}>{remove}</Text>
-            </View>
+          <View style={styles.actionRow}>
+            <Image
+              source={deleteButton}
+              style={styles.actionButton}
+            />
+            <Text style={styles.actionText}>{remove}</Text>
           </View>
         </View>
-      </Modal>
-    </View>
+      </View>
+      <Edit
+        body={body}
+        id={id}
+        setModalVisibility={setEditModalVisibility}
+        text={text}
+        visibility={editModalVisibility}
+      />
+    </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modal: {
@@ -114,9 +127,11 @@ const styles = StyleSheet.create({
 });
 
 OptionsModal.propTypes = {
-  setModalVisibility: PropTypes.func,
-  text: PropTypes.string,
-  visibility: PropTypes.bool,
+  body: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  setModalVisibility: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+  visibility: PropTypes.bool.isRequired,
 };
 
 export default OptionsModal;
