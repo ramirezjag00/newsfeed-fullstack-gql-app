@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 
 import Post from './Post';
 
-const Posts = ({ items, setModalVisibility, handleCommentsVisibility }) => {
+const Posts = ({
+  handleCommentsVisibility,
+  items,
+  setModalVisibility,
+}) => {
   if (items.length === 0) return null;
   const posts = items.map((item, index) => {
     return (

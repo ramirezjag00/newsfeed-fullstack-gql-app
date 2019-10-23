@@ -24,7 +24,11 @@ const COMMENT_SUBSCRIPTIONS = gql`
   }
 `;
 
-const Post = ({ item, handleCommentsVisibility, setModalVisibility }) => {
+const Post = ({
+  handleCommentsVisibility,
+  item,
+  setModalVisibility,
+}) => {
   const { id, body, author: { name }, comments } = item;
   let commentsCopy = comments;
   const [commentsCount, setCommentsCount] = useState(commentsCopy.length);

@@ -13,7 +13,11 @@ import closeButton from '../../assets/outline_clear_black_48dp.png';
 import editButton from '../../assets/outline_edit_black_48dp.png';
 import deleteButton from '../../assets/outline_delete_black_48dp.png';
 
-const OptionsModal = ({ visibility, setModalVisibility, text }) => {
+const OptionsModal = ({
+  setModalVisibility,
+  text,
+  visibility,
+}) => {
   const edit = `Edit ${text}`;
   const remove = `Delete ${text}`;
 
