@@ -15,3 +15,7 @@
   - add new users/comments/posts
   - update specific user/comment/post
   - delete specific user/comment/post
+
+## Subscription
+  - subscribe to created, updated, or deleted post
+  - subscribe to created, updated, or deleted comment in a post
