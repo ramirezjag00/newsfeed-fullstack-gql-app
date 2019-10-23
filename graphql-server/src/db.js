@@ -15,6 +15,12 @@ const users = [
     name: 'Mike Enriquez',
     email: 'mike@example.com',
     age: 24
+  },
+  {
+    id: '4',
+    name: 'Juan de la Cruz',
+    email: 'juan@example.com',
+    age: 26,
   }
 ];
 
