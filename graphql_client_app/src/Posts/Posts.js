@@ -7,16 +7,14 @@ import Post from './Post';
 const Posts = ({
   handleCommentsVisibility,
   items,
-  setModalVisibility,
 }) => {
   if (items.length === 0) return null;
   const posts = items.map((item, index) => {
     return (
       <Post
+        handleCommentsVisibility={handleCommentsVisibility}
         item={item}
         key={index}
-        setModalVisibility={setModalVisibility}
-        handleCommentsVisibility={handleCommentsVisibility}
       />
     );
   });
@@ -35,9 +33,8 @@ const Posts = ({
 };
 
 Posts.propTypes = {
-  items: PropTypes.array.isRequired,
   handleCommentsVisibility: PropTypes.func,
-  setModalVisibility: PropTypes.func,
+  items: PropTypes.array.isRequired,
 };
 
 const styles = StyleSheet.create({

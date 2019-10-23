@@ -11,6 +11,7 @@ import gql from 'graphql-tag';
 import { useSubscription } from '@apollo/react-hooks';
 
 import Portrait from '../Common/Portrait';
+import OptionsModal from '../Common/OptionsModal';
 import meatballs from '../../assets/outline_more_horiz_black_48dp.png';
 
 const COMMENT_SUBSCRIPTIONS = gql`
@@ -24,14 +25,11 @@ const COMMENT_SUBSCRIPTIONS = gql`
   }
 `;
 
-const Post = ({
-  handleCommentsVisibility,
-  item,
-  setModalVisibility,
-}) => {
+const Post = ({ handleCommentsVisibility, item }) => {
   const { id, body, author: { name }, comments } = item;
   let commentsCopy = comments;
   const [commentsCount, setCommentsCount] = useState(commentsCopy.length);
+  const [modalVisibility, setModalVisibility] = useState(false);
   const { data } = useSubscription(COMMENT_SUBSCRIPTIONS, { variables: { id } });
   if (data && commentsCopy.length === commentsCount) {
     const { comment: { mutation, data: commentData } } = data;
@@ -72,6 +70,13 @@ const Post = ({
         </TouchableOpacity>
       </View>
       <View style={styles.postSpacer} />
+      <OptionsModal
+        body={body}
+        id={id}
+        setModalVisibility={setModalVisibility}
+        text={'Post'}
+        visibility={modalVisibility}
+      />
     </Fragment>
   );
 };
@@ -79,7 +84,6 @@ const Post = ({
 Post.propTypes = {
   item: PropTypes.object.isRequired,
   handleCommentsVisibility: PropTypes.func,
-  setModalVisibility: PropTypes.func,
 };
 
 const styles = StyleSheet.create({

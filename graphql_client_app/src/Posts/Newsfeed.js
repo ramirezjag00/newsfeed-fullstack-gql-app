@@ -4,7 +4,6 @@ import { useQuery, useSubscription } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Loading from '../Common/Loading';
-import OptionsModal from '../Common/OptionsModal';
 import Posts from './Posts';
 import Comments from '../Comments/Comments';
 
@@ -43,8 +42,8 @@ const POST_SUBSCRIPTIONS = gql`
 
 const Newsfeed = () => {
   const [posts, setPosts] = useState([]);
-  const [modalVisibility, setModalVisibility] = useState(false);
   const [commentsVisibility, setCommentsVisibility] = useState(false);
+  const [editModalVisibility, setEditModalVisibility] = useState(false);
   const [postId, setPostId] = useState('');
   const { data: postSubscriptionData } = useSubscription(POST_SUBSCRIPTIONS);
   const { loading, error, data } = useQuery(GET_POSTS);
@@ -84,17 +83,11 @@ const Newsfeed = () => {
       <Posts
         items={posts}
         handleCommentsVisibility={handleCommentsVisibility}
-        setModalVisibility={setModalVisibility}
       />
       <Comments
         id={postId}
         handleCommentsVisibility={handleCommentsVisibility}
         visibility={commentsVisibility}
-      />
-      <OptionsModal
-        setModalVisibility={setModalVisibility}
-        visibility={modalVisibility}
-        text={'Post'}
       />
     </View>
   );
