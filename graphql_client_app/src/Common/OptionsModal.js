@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 
 import Edit from './Edit';
+import useDelete from '../utils/useDelete';
 
 import closeButton from '../../assets/outline_clear_black_48dp.png';
 import editButton from '../../assets/outline_edit_black_48dp.png';
@@ -25,6 +26,7 @@ const OptionsModal = ({
   const [editModalVisibility, setEditModalVisibility] = useState(false);
   const edit = `Edit ${text}`;
   const remove = `Delete ${text}`;
+  const gqlDeleteAction = useDelete(id, text);
 
   return (
     <Modal
@@ -56,13 +58,19 @@ const OptionsModal = ({
             />
             <Text style={styles.actionText}>{edit}</Text>
           </TouchableOpacity>
-          <View style={styles.actionRow}>
+          <TouchableOpacity
+            style={styles.actionRow}
+            onPress={() => {
+              gqlDeleteAction();
+              setModalVisibility(false);
+            }}
+          >
             <Image
               source={deleteButton}
               style={styles.actionButton}
             />
             <Text style={styles.actionText}>{remove}</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
       <Edit
