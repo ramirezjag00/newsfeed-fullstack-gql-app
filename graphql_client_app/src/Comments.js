@@ -136,12 +136,12 @@ const Comments = ({ id, setCommentsVisibility, visibility, handleCommentsVisibil
             {commentsUI}
           </ScrollView>
         </View>
+        <OptionsModal
+          setModalVisibility={setModalVisibility}
+          visibility={modalVisibility}
+          text={'Comment'}
+        />
       </Modal>
-      <OptionsModal
-        setModalVisibility={setModalVisibility}
-        visibility={modalVisibility}
-        text={'Comment'}
-      />
     </View>
   );
 };
