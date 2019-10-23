@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import {
   Image,
+  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -15,6 +17,7 @@ import Loading from '../Common/Loading';
 import Comment from '../Comments/Comment';
 
 import closeButton from '../../assets/outline_clear_black_48dp.png';
+import sendButton from '../../assets/outline_send_black_48dp.png';
 
 const COMMENT_SUBSCRIPTIONS = gql`
   subscription comments($id: ID!) {
@@ -57,6 +60,7 @@ const Comments = ({
   handleCommentsVisibility,
 }) => {
   if (!id && !visibility) return null;
+  const placeholder = 'What do you want to share in this?';
   const [comments, setComments] = useState([]);
   const { data: commentSubscriptionData } = useSubscription(COMMENT_SUBSCRIPTIONS, { variables: { id } });
   const { data, error, loading } = useQuery(GET_POST_COMMENTS, { variables: { id } });
@@ -125,6 +129,24 @@ const Comments = ({
         >
           {commentsUI}
         </ScrollView>
+        <KeyboardAvoidingView enabled behavior={'position'} keyboardVerticalOffset={30}>
+          <View style={styles.commentContainer}>
+            <TextInput
+              style={styles.comment}
+              placeholder={placeholder}
+              placeholderTextColor={'#aeaeae'}
+            />
+            <TouchableOpacity
+                style={styles.sendContainer}
+                onPress={() => {}}
+              >
+                <Image
+                  style={styles.sendButton}
+                  source={sendButton}
+                />
+              </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
       </View>
     </Modal>
   );
@@ -157,6 +179,38 @@ const styles = StyleSheet.create({
   line: {
     borderBottomColor: '#dadada',
     borderBottomWidth: 1,
+  },
+  commentContainer: {
+    width: '100%',
+    borderTopColor: '#dadada',
+    borderTopWidth: 1,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+  },
+  comment: {
+    width: '100%',
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#ffffff',
+    borderColor: '#dadada',
+    borderWidth: 1,
+    fontSize: 12,
+    paddingLeft: 10,
+    paddingRight: 30,
+  },
+  sendContainer: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginLeft: -30,
+  },
+  sendButton: {
+    height: 20,
+    width: 20,
+    tintColor: '#F58855',
   },
 });
 
