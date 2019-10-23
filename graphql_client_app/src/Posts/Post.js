@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-
-import Portrait from './Portrait';
-import meatballs from '../assets/outline_more_horiz_black_48dp.png';
 import { useSubscription } from '@apollo/react-hooks';
+
+import Portrait from '../Common/Portrait';
+import meatballs from '../../assets/outline_more_horiz_black_48dp.png';
 
 const COMMENT_SUBSCRIPTIONS = gql`
   subscription comments($id: ID!) {

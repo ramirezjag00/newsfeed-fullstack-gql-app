@@ -12,11 +12,11 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import Modal from 'react-native-modal';
 
-import OptionsModal from './OptionsModal';
-import Loading from './Loading';
-import Portrait from './Portrait';
+import OptionsModal from '../Common/OptionsModal';
+import Loading from '../Common/Loading';
+import Portrait from '../Common/Portrait';
 
-import closeButton from '../assets/outline_clear_black_48dp.png';
+import closeButton from '../../assets/outline_clear_black_48dp.png';
 
 const COMMENT_SUBSCRIPTIONS = gql`
   subscription comments($id: ID!) {

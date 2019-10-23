@@ -3,10 +3,10 @@ import { View } from 'react-native';
 import { useQuery, useSubscription } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-import Loading from './Loading';
-import OptionsModal from './OptionsModal';
+import Loading from '../Common/Loading';
+import OptionsModal from '../Common/OptionsModal';
 import Posts from './Posts';
-import Comments from './Comments';
+import Comments from '../Comments/Comments';
 
 const GET_POSTS = gql`
   query {

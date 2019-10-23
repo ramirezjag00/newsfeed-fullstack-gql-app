@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  Text,
-  View,
-} from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import ApolloClient from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
@@ -12,8 +8,8 @@ import { split } from 'apollo-link';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 
-import Newsfeed from './Newsfeed';
-import Header from './Header';
+import Newsfeed from '../src/Posts/Newsfeed';
+import Header from '../src/Common/Header';
 
 const httpLink = new HttpLink({
   uri: 'http://localhost:4000',

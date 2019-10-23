@@ -9,9 +9,9 @@ import {
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 
-import closeButton from '../assets/outline_clear_black_48dp.png';
-import editButton from '../assets/outline_edit_black_48dp.png';
-import deleteButton from '../assets/outline_delete_black_48dp.png';
+import closeButton from '../../assets/outline_clear_black_48dp.png';
+import editButton from '../../assets/outline_edit_black_48dp.png';
+import deleteButton from '../../assets/outline_delete_black_48dp.png';
 
 const OptionsModal = ({ visibility, setModalVisibility, text }) => {
   const edit = `Edit ${text}`;
