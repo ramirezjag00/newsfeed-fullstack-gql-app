@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -13,6 +13,8 @@ import sendButton from '../../assets/outline_send_black_48dp.png';
 
 const Header = () => {
   const placeholder = 'Tell us your recent Booky experience!';
+  const [value, setValue] = useState('');
+  const isValid = value.length >= 3;
   return (
     <View style={styles.container}>
       <Portrait style={styles.portrait} />
@@ -23,13 +25,19 @@ const Header = () => {
             style={styles.textInput}
             placeholder={placeholder}
             placeholderTextColor={'#aeaeae'}
+            keyboardType={'default'}
+            onChangeText={post => setValue(post)}
+            selectionColor={'#F58855'}
+            underlineColorAndroid={'transparent'}
+            value={value}
           />
           <TouchableOpacity
             style={styles.sendContainer}
             onPress={() => {}}
+            disabled={!isValid}
           >
             <Image
-              style={styles.sendButton}
+              style={[styles.sendButton, isValid && { tintColor: '#F58855' }]}
               source={sendButton}
             />
           </TouchableOpacity>
@@ -78,7 +86,7 @@ const styles = StyleSheet.create({
   sendButton: {
     height: 20,
     width: 20,
-    tintColor: '#F58855',
+    tintColor: '#dadada',
   },
 });
 

@@ -61,6 +61,8 @@ const Comments = ({
 }) => {
   if (!id && !visibility) return null;
   const placeholder = 'What do you want to share in this?';
+  const [value, setValue] = useState('');
+  const isValid = value.length >= 3;
   const [comments, setComments] = useState([]);
   const { data: commentSubscriptionData } = useSubscription(COMMENT_SUBSCRIPTIONS, { variables: { id } });
   const { data, error, loading } = useQuery(GET_POST_COMMENTS, { variables: { id } });
@@ -135,13 +137,19 @@ const Comments = ({
               style={styles.comment}
               placeholder={placeholder}
               placeholderTextColor={'#aeaeae'}
+              keyboardType={'default'}
+              onChangeText={post => setValue(post)}
+              selectionColor={'#F58855'}
+              underlineColorAndroid={'transparent'}
+              value={value}
             />
             <TouchableOpacity
                 style={styles.sendContainer}
                 onPress={() => {}}
+                disabled={!isValid}
               >
                 <Image
-                  style={styles.sendButton}
+                  style={[styles.sendButton, isValid && { tintColor: '#F58855' }]}
                   source={sendButton}
                 />
               </TouchableOpacity>
@@ -210,7 +218,7 @@ const styles = StyleSheet.create({
   sendButton: {
     height: 20,
     width: 20,
-    tintColor: '#F58855',
+    tintColor: '#dadada',
   },
 });
 

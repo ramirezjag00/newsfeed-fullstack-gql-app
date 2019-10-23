@@ -21,6 +21,7 @@ const Edit = ({
   visibility,
 }) => {
   const [value, setValue] = useState(body);
+  const isValid = value.length >= 3 && value !== body;
   const gqlUpdateAction = useUpdate(id, text, value);
   
   return (
@@ -64,12 +65,13 @@ const Edit = ({
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.actionButton, styles.updateButton]}
+                style={[styles.actionButton, styles.updateButton, isValid && { backgroundColor: '#F58855' }]}
                 onPress={() => {
                   gqlUpdateAction();
                   setModalVisibility(false);
                   closeOptionsModal(false);
                 }}
+                disabled={!isValid}
               >
                 <Text style={styles.update}>
                   UPDATE
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
   },
   updateButton: {
     borderColor: 'transparent',
-    backgroundColor: '#F58855',
+    backgroundColor: '#dadada',
   },
   cancel: {
     fontSize: 12,
