@@ -11,20 +11,21 @@
 - [x] Comment Modal
 - [x] Comment / Post Edit Page
 - [x] Query, Mutation and Subscription Posts/Comments
+- [ ] Profile Page - Timeline - Facebook style
+- [ ] Log in Page
+- [ ] authentication - OTP
+- [ ] settings page for log in button, dark mode button
+- [ ] authorization for CRUD of posts/comments/users
+- [ ] search feature (posts/comments/users)
+- [ ] Splash Screen `look into xcode or android studio`
 - [ ] Loading Shimmering State `npm i react-native-shimmer-placeholder`
 - [ ] Empty / Error State `look for images`
 - [ ] Connectivity Offline State `npm install --save @react-native-community/netinfo`
 - [ ] React-Native-Testing / Jest `npm i --save-dev @testing-library/jest-dom @testing-library/react jest`
-- [ ] Splash Screen `look into xcode or android studio`
 - [ ] folder structure - [State Colocation](https://kentcdodds.com/blog/state-colocation-will-make-your-react-app-faster)
 - [ ] global styling - `Stylesheet or Extended Stylesheet`
 - [ ] infinite scroll
-- [ ] authentication - OTP
 - [ ] dark mode - `useContext`
-- [ ] Log in Page
-- [ ] settings page for log in button, dark mode button
-- [ ] authorization for CRUD of posts/comments/users
-- [ ] Profile Page - Timeline - Facebook style
 
 ### To do - server:
 - [x] Query, Mutation and Subscription Posts/Comments/Users
@@ -44,6 +45,9 @@
 - [x] Design Comments Modal
 - [x] Design Menu Overlay for posts / comments
 - [x] Design Edit comment/post modal
+- [ ] Design Empty States
+- [ ] Design Search 
+- [ ] Design Profile Page
 - [ ] Design settings page
 - [ ] Design Log in Page
 - [ ] Switch to Adobe Xd instead of Figma
