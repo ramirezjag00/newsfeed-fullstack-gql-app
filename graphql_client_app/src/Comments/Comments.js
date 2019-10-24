@@ -89,12 +89,13 @@ const Comments = ({
   const isValid = value.length >= 3;
   const [comments, setComments] = useState([]);
   const { data: commentSubscriptionData } = useSubscription(COMMENT_SUBSCRIPTIONS, { variables: { id } });
-  const { data, error, loading } = useQuery(GET_POST_COMMENTS, { variables: { id } });
+  const { data, error, loading, refetch } = useQuery(GET_POST_COMMENTS, { variables: { id } });
   if (loading) {
     return <Loading loading={loading} />;
   } else if (error) {
     console.log(error);
   } else if (!loading && !error && data.posts[0].comments !== comments && !commentSubscriptionData) {
+    refetch();
     setComments(data.posts[0].comments.reverse());
   } else if (commentSubscriptionData) {
     const { comment: { mutation, data: commentData } } = commentSubscriptionData;
