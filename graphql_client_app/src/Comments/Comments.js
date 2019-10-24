@@ -118,7 +118,6 @@ const Comments = ({
   }
 
   const commentsUI = comments.map(comment => {
-
     return (
       <Comment
         item={comment}
