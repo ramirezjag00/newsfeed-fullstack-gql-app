@@ -136,7 +136,7 @@ const Mutation = {
     return user;
   },
   updateUser(parent, { id, data }, { users }, info) {
-    const { name, email, age } = data;
+    const { name, email } = data;
     const user = users.find(user => user.id === id);
     if (!user) throw new Error('User not found');
     
@@ -147,7 +147,6 @@ const Mutation = {
     }
 
     if (name) user.name = name;
-    if (age !== undefined) user.age = age;
 
     return user;
   },

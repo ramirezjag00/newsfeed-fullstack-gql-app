@@ -3,7 +3,6 @@ const users = [
     id: '1',
     name: 'Andrey Ramirez',
     email: 'andrey@example.com',
-    age: 26,
   },
   {
     id: '2',
@@ -14,13 +13,11 @@ const users = [
     id: '3',
     name: 'Mike Enriquez',
     email: 'mike@example.com',
-    age: 24
   },
   {
     id: '4',
     name: 'Juan de la Cruz',
     email: 'juan@example.com',
-    age: 26,
   }
 ];
 

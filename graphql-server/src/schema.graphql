@@ -55,7 +55,6 @@ input AddCommentInput {
 input AddUserInput {
   name: String!,
   email: String!,
-  age: Int
 }
 
 input UpdateCommentInput {
@@ -65,7 +64,6 @@ input UpdateCommentInput {
 input UpdateUserInput {
   name: String,
   email: String,
-  age: Int
 }
 
 input UpdatePostInput {
@@ -78,7 +76,6 @@ type User {
   id: ID!
   name: String!
   email: String!
-  age: Int
   posts: [Post!]!
   comments: [Comment!]!
 }
