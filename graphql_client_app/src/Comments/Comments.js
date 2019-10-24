@@ -82,7 +82,7 @@ const Comments = ({
   visibility,
   handleCommentsVisibility,
 }) => {
-  const placeholder = 'What do you want to share in this?';
+  const placeholder = 'Write a comment...';
   const [value, setValue] = useState('');
   const gqlVariable = { variables: { text: value, postId: id } };
   const [addComment] = useMutation(CREATE_COMMENT);

@@ -32,7 +32,7 @@ import Portrait from './Portrait';
 import sendButton from '../../assets/outline_send_black_48dp.png';
 
 const Header = () => {
-  const placeholder = 'Tell us your recent Booky experience!';
+  const placeholder = 'What\'s on your mind?';
   const [value, setValue] = useState('');
   const gqlVariable = { variables: { body: value } };
   const [addPost] = useMutation(CREATE_POST);
