@@ -62,7 +62,7 @@ const Newsfeed = () => {
         setPosts(postsCopy);
       } else if (mutation === 'UPDATED') {
         const originalPost = posts[postIndex];
-        if (originalPost.body !== postData.body || originalPost.title !== postData.title) {
+        if (originalPost.body !== postData.body) {
           postsCopy.splice(postIndex, 1, postData);
           setPosts(postsCopy);
         }

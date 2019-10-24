@@ -28,7 +28,7 @@ const COMMENT_SUBSCRIPTIONS = gql`
 const Post = ({ handleCommentsVisibility, item }) => {
   const { id, body, author: { name }, comments } = item;
   let commentsCopy = comments;
-  const [commentsCount, setCommentsCount] = useState(commentsCopy.length || 0);
+  const [commentsCount, setCommentsCount] = useState(comments.length);
   const [modalVisibility, setModalVisibility] = useState(false);
   const { data } = useSubscription(COMMENT_SUBSCRIPTIONS, { variables: { id } });
   if (data && commentsCopy.length === commentsCount) {
@@ -66,7 +66,7 @@ const Post = ({ handleCommentsVisibility, item }) => {
           style={styles.commentContainer}
           onPress={() => handleCommentsVisibility(id, true)}
         >
-          <Text style={styles.commentIndicator}>{`${commentsCount} comments`}</Text>
+          <Text style={styles.commentIndicator}>{`${commentsCount !== 0 ? commentsCount : 0} comments`}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.postSpacer} />

@@ -13,9 +13,7 @@ import { useMutation } from '@apollo/react-hooks';
 const CREATE_POST = gql`
   mutation addPost($body: String!) {
     addPost(data: {
-      title: "Sample",
       body: $body,
-      published: true,
       author: 4,
     }) {
       id
@@ -57,7 +55,10 @@ const Header = () => {
           />
           <TouchableOpacity
             style={styles.sendContainer}
-            onPress={() => addPost(gqlVariable)}
+            onPress={() => {
+              addPost(gqlVariable);
+              setValue('');
+            }}
             disabled={!isValid}
           >
             <Image

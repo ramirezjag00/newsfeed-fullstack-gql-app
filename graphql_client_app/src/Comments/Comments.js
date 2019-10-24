@@ -116,11 +116,12 @@ const Comments = ({
     }
   }
 
-  const commentsUI = comments.map((comment, index) => {
+  const commentsUI = comments.map(comment => {
+
     return (
       <Comment
         item={comment}
-        key={index}
+        key={comment.id}
       />
     );
   });

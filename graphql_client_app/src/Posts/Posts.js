@@ -9,12 +9,12 @@ const Posts = ({
   items,
 }) => {
   if (items.length === 0) return null;
-  const posts = items.map((item, index) => {
+  const posts = items.map(item => {
     return (
       <Post
         handleCommentsVisibility={handleCommentsVisibility}
         item={item}
-        key={index}
+        key={item.id}
       />
     );
   });
