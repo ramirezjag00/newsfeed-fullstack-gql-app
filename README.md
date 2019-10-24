@@ -28,12 +28,12 @@
 
 ### To do - server:
 - [x] Query, Mutation and Subscription Posts/Comments/Users
-- [ ] Remove post published and title
+- [x] Remove post published and title
+- [x] Remove unnecessary properties for user table
+- [ ] Add photo_url for users default photo
 - [ ] Add created / updated at dates for posts/comments/users
 - [ ] Make use of pagination and sorting in graphql
-- [ ] Add photo_url for users default photo
 - [ ] Authorization for CRUD of posts/comments/users
-- [ ] Remove unnecessary properties for user table
 - [ ] Make use of MongoDB or PostgresQL then remove mock data
 - [ ] Deploy server in Heroku
 - [ ] Authentication OTP - using Promotexter and Firebase - Serverless or do it the GraphQL way
