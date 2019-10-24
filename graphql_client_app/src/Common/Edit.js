@@ -68,8 +68,15 @@ const Edit = ({
                 style={[styles.actionButton, styles.updateButton, isValid && { backgroundColor: '#F58855' }]}
                 onPress={() => {
                   gqlUpdateAction();
-                  setModalVisibility(false);
-                  closeOptionsModal(false);
+                  const promise = new Promise(resolve => {
+                    setTimeout(() => {
+                      setModalVisibility(false);
+                      resolve(true);
+                    }, 300);
+                  });
+                  promise.then(val => {
+                    if (val) closeOptionsModal(false);
+                  });
                 }}
                 disabled={!isValid}
               >
