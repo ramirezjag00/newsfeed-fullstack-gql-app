@@ -26,7 +26,7 @@ const OptionsModal = ({
   const [editModalVisibility, setEditModalVisibility] = useState(false);
   const edit = `Edit ${text}`;
   const remove = `Delete ${text}`;
-  const gqlDeleteAction = useDelete(id, text);
+  const [gqlDeleteAction, data] = useDelete(id, text);
 
   return (
     <Modal
@@ -62,7 +62,7 @@ const OptionsModal = ({
             style={styles.actionRow}
             onPress={() => {
               gqlDeleteAction();
-              setModalVisibility(false);
+              if (data) setModalVisibility(false);
             }}
           >
             <Image

@@ -23,10 +23,10 @@ const DELETE_POST = gql`
 `;
 
 const useDelete = (id, text) => {
-  const [deletePost] = useMutation(DELETE_POST);
-  const [deleteComment] = useMutation(DELETE_COMMENT);
+  const [deletePost, { data: postData }] = useMutation(DELETE_POST);
+  const [deleteComment, { data: commentData }] = useMutation(DELETE_COMMENT);
   const gqlVariable = { variables: { id } };
-  return () => text === 'Post' ? deletePost(gqlVariable) : deleteComment(gqlVariable);
+  return text === 'Post' ? [() => deletePost(gqlVariable), postData] : [() => deleteComment(gqlVariable), commentData];
 };
 
 useDelete.propTypes = {
