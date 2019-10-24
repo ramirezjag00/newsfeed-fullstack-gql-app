@@ -96,7 +96,7 @@ const Comments = ({
     console.log(error);
   } else if (!loading && !error && data.posts[0].comments !== comments && !commentSubscriptionData) {
     setComments(data.posts[0].comments.reverse());
-  } else if (commentSubscriptionData && comments.length !== 0) {
+  } else if (commentSubscriptionData) {
     const { comment: { mutation, data: commentData } } = commentSubscriptionData;
     const commentIndex = comments.findIndex(comment => comment.id === commentData.id);
     if (commentIndex !== -1) {
