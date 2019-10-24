@@ -8,7 +8,7 @@
 
 ## Query
 - get all users, posts, comments
-- get all users/posts/comments containing specific characters in text/name/title/body property
+- get all users/posts/comments containing specific characters in text/name/body property
 - get a specific user/post/comment  based on an id
 
 ## Mutation

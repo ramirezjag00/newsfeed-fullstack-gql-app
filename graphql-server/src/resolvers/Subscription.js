@@ -1,7 +1,7 @@
 const Subscription = {
   comment: {
     subscribe(parent, { postId }, { posts, pubsub }, info) {
-      const post = posts.find(post => (post.id === postId) && post.published);
+      const post = posts.find(post => post.id === postId);
 
       if (!post) throw new Error('Post not found');
 

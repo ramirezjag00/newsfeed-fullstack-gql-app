@@ -23,10 +23,7 @@ const Query = {
 
     if (queryContent && !id) {
       return posts.filter(post => {
-        return (
-          post.title.toLowerCase().includes(queryContent.toLowerCase()) ||
-          post.body.toLowerCase().includes(queryContent.toLowerCase())
-        );
+        return post.body.toLowerCase().includes(queryContent.toLowerCase());
       });
     }
 

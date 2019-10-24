@@ -24,23 +24,17 @@ const users = [
 const posts = [
   {
     id: '1',
-    title: '7 Habits of Highly Effective People',
     body: 'Reading: 7 Habits of Highly Effective People',
-    published: true,
     author: '1'
   },
   {
     id: '2',
-    title: 'Rich Dad, Poor Dad',
     body: 'Done Reading: Rich Dad, Poor Dad',
-    published: true,
     author: '2'
   },
   {
     id: '3',
-    title: 'Eloquent Javascript',
     body: 'Eloquent Javascript - what a nice book',
-    published: true,
     author: '3'
   },
 ];

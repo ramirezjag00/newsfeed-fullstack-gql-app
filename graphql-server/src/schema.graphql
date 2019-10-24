@@ -40,9 +40,7 @@ type CommentSubscriotionPayload {
 }
 
 input AddPostInput {
-  title: String!,
   body: String!,
-  published: Boolean!,
   author: ID!
 }
 
@@ -67,9 +65,8 @@ input UpdateUserInput {
 }
 
 input UpdatePostInput {
-  title: String,
   body: String,
-  published: Boolean,
+
 }
 
 type User {
@@ -82,9 +79,7 @@ type User {
 
 type Post {
   id: ID!
-  title: String!
   body: String!
-  published: Boolean!
   author: User!
   comments: [Comment!]!
 }

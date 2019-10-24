@@ -11,49 +11,27 @@ const Mutation = {
       ...args.data
     };
     posts.push(post);
-    if (args.data.published) {
-      pubsub.publish('post', {
-        post: {
-          mutation: 'CREATED',
-          data: post
-        }
-      });
-    }
+    pubsub.publish('post', {
+      post: {
+        mutation: 'CREATED',
+        data: post
+      }
+    });
     return post;
   },
   updatePost(parent, { id, data }, { posts, pubsub }, info) {
-    const { title, body, published } = data;
+    const { body } = data;
     const post = posts.find(post => post.id === id);
     const originalPost = { ...post };
     if (!post) throw new Error('Post not found');
 
-    if (title) post.title = title;
     if (body) post.body = body;
-    if (typeof published === 'boolean') {
-      post.published = published;
-      if (originalPost.published && !post.published) {
-        pubsub.publish('post', {
-          post: {
-            mutation: 'DELETED',
-            data: originalPost
-          }
-        });
-      } else if (!originalPost.published && post.published) {
-        pubsub.publish('post', {
-          post: {
-            mutation: 'CREATED',
-            data: post
-          }
-        });
+    pubsub.publish('post', {
+      post: {
+        mutation: 'UPDATED',
+        data: post
       }
-    } else if (post.published) {
-      pubsub.publish('post', {
-        post: {
-          mutation: 'UPDATED',
-          data: post
-        }
-      });
-    }
+    });
 
     return post;
   },
@@ -64,22 +42,20 @@ const Mutation = {
 
     const [deletedPost] = posts.splice(postIndex, 1);
     comments = comments.filter(comment => comment.post !== args.id);
-    if (deletedPost.published) {
-      pubsub.publish('post', {
-        post: {
-          mutation: 'DELETED',
-          data: deletedPost
-        }
-      });
-    }
+    pubsub.publish('post', {
+      post: {
+        mutation: 'DELETED',
+        data: deletedPost
+      }
+    });
     return deletedPost;
   },
   addComment(parent, args, { comments, users, posts, pubsub }, info) {
     const userExists = users.some(user => user.id === args.data.author);
-    const isValidPost = posts.some(post => post.id === args.data.post && post.published);
+    const isValidPost = posts.some(post => post.id === args.data.post);
 
     if (!userExists) throw new Error(`userId ${args.data.author} does not exist`);
-    if (!isValidPost) throw new Error(`postId ${args.data.post} does not exist or it isn\'t published yet`);
+    if (!isValidPost) throw new Error(`postId ${args.data.post} does not exist`);
 
     const comment = {
       id: uuidv4(),
